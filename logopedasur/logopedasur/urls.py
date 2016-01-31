@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    #url(r'^$',  ),
     url(r'^admin/', admin.site.urls),
     url(r'', include('logopedasur.pacientes.urls')),
     url(r'', include('logopedasur.sesiones.urls')),
