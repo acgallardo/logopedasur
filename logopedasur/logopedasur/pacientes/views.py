@@ -9,7 +9,7 @@ from logopedasur.pacientes.forms import PacientesForm
 
 # Create your views here.
 def pacientes_list(request):
-    pacientes = Pacientes.objects.filter(publish_date__lte=datetime.now()).order_by('-publish_date')
+    pacientes = Paciente.objects.filter(publish_date__lte=datetime.now()).order_by('-publish_date')
     return render_to_response("pacientes/pacientes_list.html",
     {'pacientes': pacientes},
     context_instance=RequestContext(request))
@@ -18,12 +18,12 @@ def pacientes_add(request):
     data = None #por si no hubiera un POST
     if request.method == 'POST':
         data = request.POST
-    initial = {'publish_date': datetime.now()}
-    form = NewsForm(data=data, initial=initial)
+    initial = {}
+    form = PacientesForm(data=data, initial=initial)
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect(reverse('news_list'))
-    return render_to_response("news/news_add.html",{'form': form},context_instance=RequestContext(request))
+        return HttpResponseRedirect(reverse('pacientes_list'))
+    return render_to_response("pacientes/pacientes_add.html",{'form': form},context_instance=RequestContext(request))
 
 
 def pacientes_edit(request, newsitem_pk):
