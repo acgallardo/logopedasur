@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
-from logopedasur.pacientes.models import Pacientes
+from logopedasur.pacientes.models import Paciente
 from logopedasur.pacientes.forms import PacientesForm
 
 # Create your views here.
