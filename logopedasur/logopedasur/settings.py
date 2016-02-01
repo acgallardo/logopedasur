@@ -37,10 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap3',	
+    'bootstrap3',
     'logopedasur.pacientes',
     'logopedasur.sesiones',
     'logopedasur.facturacion',
+    'logopedasur.main',
 ]
 
 MIDDLEWARE_CLASSES = [
