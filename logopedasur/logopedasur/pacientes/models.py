@@ -16,7 +16,7 @@ class Paciente(models.Model):
     fecha_nacimiento = models.DateTimeField(_('Fecha de nacimiento'))
     observaciones = models.TextField(_('observaciones'), blank=True, null=True)
     fecha_ingreso = models.DateTimeField(_('Fecha de ingreso'), auto_now_add=True)
-    
+    imagen = models.ImageField(upload_to='uploads/', blank=True, null=True)
 
 
     def __str__(self):

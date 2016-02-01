@@ -58,3 +58,6 @@ target/
 
 #sqlite
 *.sqlite3
+
+#uploads
+uploads/
