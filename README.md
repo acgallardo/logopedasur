@@ -15,3 +15,4 @@ Develop using:
 * Bootstrap 3 framework.
 * SQLite3 (dev environment), MySQL or MariaDB on production.
 * AngularJS
+* Gentallela theme (Bootstrap based)
