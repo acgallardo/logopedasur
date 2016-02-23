@@ -9,9 +9,9 @@ from logopedasur.pacientes.forms import PacientesForm
 
 # Create your views here.
 def pacientes_list(request):
-    pacientes = Paciente.objects.filter(publish_date__lte=datetime.now()).order_by('-publish_date')
+    #pacientes = Paciente.objects.filter(publish_date__lte=datetime.now()).order_by('-publish_date')
     return render_to_response("pacientes/pacientes_list.html",
-    {'pacientes': pacientes},
+    {'nombre':'trukise'},
     context_instance=RequestContext(request))
 
 def pacientes_add(request):
@@ -23,7 +23,7 @@ def pacientes_add(request):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('pacientes_list'))
-    return render_to_response("pacientes/pacientes_add.html",{'form': form},context_instance=RequestContext(request))
+    return render_to_response("pacientes/pacientes_add.html",{"nombre": "trukise"},context_instance=RequestContext(request))
 
 
 def pacientes_edit(request, newsitem_pk):

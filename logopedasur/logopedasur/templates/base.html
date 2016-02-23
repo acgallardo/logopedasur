@@ -57,7 +57,7 @@
                 <div class="left_col scroll-view">
 
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>logopedaSUR</span></a>
+                        <a href="index.html" class="site_title"><i class="fa fa-linux"></i> <span>logopedaSUR</span></a>
                     </div>
                     <div class="clearfix"></div>
 
@@ -67,7 +67,7 @@
                             <img src="{% static 'gentelella-theme/images/img.jpg' %}" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
-                            <span>Welcome,</span>
+                            <span>{% trans "Bienvenido" %},</span>
                             <h2>{{ nombre }}</h2>
                         </div>
                     </div>
@@ -98,17 +98,6 @@
 
             <div class="right_col" role="main">
                 {% block page_content %}
-
-                <!-- footer content -->
-                <footer>
-                    <div class="">
-                        <p class="pull-right">logopedaSUR by <a>@trukise</a>. |
-                            <span class="lead"> <i class="fa fa-paw"></i> logopedaSUR </span>
-                        </p>
-                    </div>
-                    <div class="clearfix"></div>
-                </footer>
-                <!-- /footer content -->
 
                 {% endblock %}
             </div>
