@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'', include('logopedasur.pacientes.urls')),
     url(r'', include('logopedasur.sesiones.urls')),
     url(r'', include('logopedasur.facturacion.urls')),
+    url(r'', include('logopedasur.terapeutas.urls')),
 ]

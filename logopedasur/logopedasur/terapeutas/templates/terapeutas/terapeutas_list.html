@@ -1,0 +1,32 @@
+{% extends "base.html"%}
+
+{% load i18n bootstrap3 %}
+
+{%  block page_content  %}
+
+<h1>Listado de terapeutas</h1>
+
+<div class="row">
+  {% for terapeuta in terapeutas %}
+      <div class="col-lg-4 col-md-6">
+        <h3>
+          {{ terapeuta.nombre }}, {{ terapeuta.apellidos}}
+          {% if user.is_authenticated %}<small><a href="{% url "terapeutas_edit" terapeuta.pk %}">({% trans "Editar" %})</a></small>{% endif %}
+        </h3>
+        <!-- {{ newsitem.description|safe|truncatewords_html:25 }} -->
+      </div>
+  {% endfor %}
+</div>
+
+<!-- footer content -->
+<footer>
+    <div class="">
+        <p class="pull-right">logopedaSUR by <a>@trukise</a>. |
+            <span class="lead"> <i class="fa fa-paw"></i> logopedaSUR </span>
+        </p>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+<!-- /footer content -->
+
+{% endblock  %}}

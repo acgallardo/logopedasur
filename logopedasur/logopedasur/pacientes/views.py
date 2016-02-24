@@ -7,7 +7,7 @@ from django.template import RequestContext
 from logopedasur.pacientes.models import Paciente
 from logopedasur.pacientes.forms import PacientesForm
 
-# Detail view for a patient
+
 def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
     return render_to_response("pacientes/pacientes_details.html",
@@ -15,12 +15,12 @@ def pacientes_details(request, pacientesitem_pk):
                               context_instance=RequestContext(request))
 
 
-# Create your views here.
 def pacientes_list(request):
     pacientes = Paciente.objects.filter().order_by('apellidos')
     return render_to_response("pacientes/pacientes_list.html",
-    {'nombre':'trukise', 'pacientes': pacientes},
-    context_instance=RequestContext(request))
+                              {'nombre': 'trukise', 'pacientes': pacientes},
+                              context_instance=RequestContext(request))
+
 
 def pacientes_add(request):
     data = None #por si no hubiera un POST
