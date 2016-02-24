@@ -7,11 +7,19 @@ from django.template import RequestContext
 from logopedasur.pacientes.models import Paciente
 from logopedasur.pacientes.forms import PacientesForm
 
+# Detail view for a patient
+def pacientes_details(request, pacientesitem_pk):
+    paciente = Paciente.objects.get(pk=pacientesitem_pk)
+    return render_to_response("pacientes/pacientes_details.html",
+                              {'paciente': paciente},
+                              context_instance=RequestContext(request))
+
+
 # Create your views here.
 def pacientes_list(request):
-    #pacientes = Paciente.objects.filter(publish_date__lte=datetime.now()).order_by('-publish_date')
+    pacientes = Paciente.objects.filter().order_by('apellidos')
     return render_to_response("pacientes/pacientes_list.html",
-    {'nombre':'trukise'},
+    {'nombre':'trukise', 'pacientes': pacientes},
     context_instance=RequestContext(request))
 
 def pacientes_add(request):
@@ -23,18 +31,18 @@ def pacientes_add(request):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('pacientes_list'))
-    return render_to_response("pacientes/pacientes_add.html",{"nombre": "trukise"},context_instance=RequestContext(request))
+    return render_to_response("pacientes/pacientes_add.html",{"nombre": "trukise", "form": form},context_instance=RequestContext(request))
 
 
-def pacientes_edit(request, newsitem_pk):
+def pacientes_edit(request, pacientesitem_pk):
     data = None #por si no hubiera un POST
     if request.method == 'POST':
         data = request.POST
-    news_item = News.objects.get(pk=newsitem_pk)
-    form = NewsForm(data=data, instance=news_item)
+    pacientes_item = Paciente.objects.get(pk=pacientesitem_pk)
+    form = PacientesForm(data=data, instance=pacientes_item)
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect(reverse('news_list'))
-    return render_to_response("news/news_add.html",{'form': form},context_instance=RequestContext(request))
+        return HttpResponseRedirect(reverse('pacientes_list'))
+    return render_to_response("pacientes/pacientes_add.html",{'form': form},context_instance=RequestContext(request))
 
 # Create your views here.
