@@ -14,6 +14,14 @@
                     </li>
                 </ul>
             </li>
+            <li><a><i class="fa fa-users"></i> {% trans "Terapeutas" %} <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" style="display: none">
+                    <li><a href="index.html">{% trans "Nuevo" %}</a>
+                    </li>
+                    <li><a href="{% url 'terapeutas_list' %}">{% trans "Listado terapeuta" %}</a>
+                    </li>
+                </ul>
+            </li>
             <li><a><i class="fa fa-euro"></i> {% trans "Facturación" %} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
                     <li><a href="form.html">General Form</a>
