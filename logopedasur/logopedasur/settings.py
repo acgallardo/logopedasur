@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'logopedasur.pacientes',
     'logopedasur.sesiones',
     'logopedasur.facturacion',
+    'logopedasur.terapeutas',
     'logopedasur.main',
 ]
 
