@@ -1,21 +1,89 @@
 {% extends "base.html"%}
 
 {% load i18n bootstrap3 %}
+{% load staticfiles %}
 
 {%  block page_content  %}
 
-<h1>Listado de terapeutas</h1>
-
-<div class="row">
-  {% for terapeuta in terapeutas %}
-      <div class="col-lg-4 col-md-6">
-        <h3>
-          {{ terapeuta.nombre }}, {{ terapeuta.apellidos}}
-          {% if user.is_authenticated %}<small><a href="{% url "terapeutas_edit" terapeuta.pk %}">({% trans "Editar" %})</a></small>{% endif %}
-        </h3>
-        <!-- {{ newsitem.description|safe|truncatewords_html:25 }} -->
+<div class="">
+  <div class="page-title">
+      <div class="title_left">
+          <h3>Listado de terapeutas</h3>
       </div>
-  {% endfor %}
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+      <div class="col-md-12">
+          <div class="x_panel">
+              <div class="x_content">
+
+                  <div class="row">
+
+                      <div class="col-md-12 col-sm-12 col-xs-12" style="text-align:center;">
+                          <ul class="pagination pagination-split">
+                              <li><a href="#">A</a>
+                              </li>
+                              <li><a href="#">B</a>
+                              </li>
+                              <li><a href="#">C</a>
+                              </li>
+                              <li><a href="#">D</a>
+                              </li>
+                              <li><a href="#">E</a>
+                              </li>
+                              <li>...</li>
+                              <li><a href="#">W</a>
+                              </li>
+                              <li><a href="#">X</a>
+                              </li>
+                              <li><a href="#">Y</a>
+                              </li>
+                              <li><a href="#">Z</a>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                      {% for terapeuta in terapeutas %}
+                      <div class="col-md-4 col-sm-4 col-xs-12 animated fadeInDown">
+                          <div class="">
+                              <div class="col-sm-12">
+                                  <div class="left col-xs-7">
+                                      <h2>{{ terapeuta.nombre }}, {{ terapeuta.apellidos}}</h2>
+                                      {% for especialidad in terapeuta.especialidad.all %}
+                                      <p><strong>{{ especialidad }}</strong></p>
+                                      {% endfor %}
+                                      <ul class="list-unstyled">
+                                          <li><i class="fa fa-phone"></i>: {{ terapeuta.telefono }} </li>
+                                      </ul>
+                                  </div>
+                                  <div class="right col-xs-5 text-center">
+                                      <img src="{% static 'gentelella-theme/images/user.png' %}" alt="" class="img-circle img-responsive">
+                                  </div>
+                              </div>
+                              <div class="col-xs-12 bottom text-left">
+                                  <div class="col-xs-12 col-sm-6 emphasis">
+                                      {% if user.is_authenticated %}
+                                      <a href="{% url "terapeutas_details" terapeuta.pk %}" type="button" class="btn btn-primary btn-xs">
+                                        <i class="fa fa-user"></i>
+                                          {% trans "Ver terapeuta" %}
+                                      </a>
+                                      {% endif %}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      {% endfor %}
+
+                  </div>
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+
 </div>
 
 <!-- footer content -->

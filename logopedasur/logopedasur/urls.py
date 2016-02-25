@@ -19,6 +19,7 @@ from logopedasur.main import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^login/', views.login, name='login'),
     url(r'^admin/', admin.site.urls),
     url(r'', include('logopedasur.pacientes.urls')),
     url(r'', include('logopedasur.sesiones.urls')),

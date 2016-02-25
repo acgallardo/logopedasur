@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
@@ -22,6 +24,7 @@ def pacientes_list(request):
                               context_instance=RequestContext(request))
 
 
+@login_required(login_url='/admin/')
 def pacientes_add(request):
     data = None #por si no hubiera un POST
     if request.method == 'POST':
@@ -34,6 +37,7 @@ def pacientes_add(request):
     return render_to_response("pacientes/pacientes_add.html",{"nombre": "trukise", "form": form},context_instance=RequestContext(request))
 
 
+@login_required(login_url='/admin/')
 def pacientes_edit(request, pacientesitem_pk):
     data = None #por si no hubiera un POST
     if request.method == 'POST':
