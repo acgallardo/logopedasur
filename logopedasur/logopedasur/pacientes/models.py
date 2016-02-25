@@ -22,6 +22,7 @@ class Paciente(models.Model):
     observaciones = models.TextField(_('observaciones'), blank=True, null=True)
     fecha_ingreso = models.DateTimeField(_('Fecha de ingreso'),
                                          auto_now_add=True)
+    telefono = models.CharField(_('telefono'), max_length=12, null=True)
     imagen = models.ImageField(upload_to='uploads/', blank=True, null=True)
     terapeutas = models.ManyToManyField(Terapeuta)
 

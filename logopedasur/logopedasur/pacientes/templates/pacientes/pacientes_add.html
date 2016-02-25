@@ -4,15 +4,25 @@
 
 {%  block page_content  %}
 
-<h1>Nuevo Paciente</h1>
+
+<div class="page-title">
+      <div class="title_left">
+          <h3>Nuevo paciente</h3>
+      </div>
+</div>
+<div class="clearfix"></div>
 <div class="row">
-    <div class="col-lg-6">
-      <form action="." method="post" class="form">
-          {% csrf_token %}
-          {% bootstrap_form form %}
-          <button type="submit">{% trans "Submit" %}</button>
-      <form>
-    </div>
+  <div class="x_panel">
+      <div class="x_content">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <form action="." method="post" class="form">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+          <form>
+        </div>
+      </div>
+  </div>
 </div>
 
 <!-- footer content -->

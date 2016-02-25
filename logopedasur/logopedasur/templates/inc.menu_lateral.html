@@ -8,15 +8,15 @@
         <ul class="nav side-menu">
             <li><a><i class="fa fa-users"></i> {% trans "Pacientes" %} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
-                    <li><a href="index.html">{% trans "Nuevo" %}</a>
+                    <li><a href="{% url 'pacientes_add' %}">{% trans "Nuevo" %}</a>
                     </li>
-                    <li><a href="index2.html">{% trans "Listado pacientes" %}</a>
+                    <li><a href="{% url 'pacientes_list' %}">{% trans "Listado pacientes" %}</a>
                     </li>
                 </ul>
             </li>
             <li><a><i class="fa fa-users"></i> {% trans "Terapeutas" %} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
-                    <li><a href="index.html">{% trans "Nuevo" %}</a>
+                    <li><a href="{% url 'terapeutas_add' %}">{% trans "Nuevo" %}</a>
                     </li>
                     <li><a href="{% url 'terapeutas_list' %}">{% trans "Listado terapeuta" %}</a>
                     </li>
