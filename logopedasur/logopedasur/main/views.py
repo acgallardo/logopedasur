@@ -11,4 +11,6 @@ def index(request):
 
 
 def login(request):
-    pass
+    return render_to_response("main/login.html",
+                              {},
+                              context_instance=RequestContext(request))

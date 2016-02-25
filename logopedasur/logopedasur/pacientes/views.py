@@ -24,7 +24,7 @@ def pacientes_list(request):
                               context_instance=RequestContext(request))
 
 
-@login_required(login_url='/admin/')
+@login_required(login_url='/login/')
 def pacientes_add(request):
     data = None #por si no hubiera un POST
     if request.method == 'POST':
