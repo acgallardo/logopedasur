@@ -35,6 +35,28 @@ def terapeutas_add(request):
                                                             {"nombre": "trukise", "form": form},
                                                             context_instance = RequestContext(request))
 
+@login_required(login_url='/login/')
+def especialidad_add(request):
+    data = None #por si no hubiera un POST
+    if request.method == 'POST':
+        data = request.POST
+    initial = {}
+    form = EspecialidadesForm(data=data, initial=initial)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('especialidad_list'))
+    return render_to_response("terapeutas/especialidad_add.html",
+                                                            {"nombre": "trukise", "form": form},
+                                                            context_instance= RequestContext(request))
+
+
+@login_required(login_url='/login/')
+def especialidad_list(request):
+    especialidades = Especialidad.objects.filter().order_by('nombre')
+    return render_to_response("terapeutas/especialidad_list.html",
+                                                            {"especialidades": especialidades},
+                                                            context_instance= RequestContext(request))
+
 
 def terapeutas_details(request, terapeutasitem_pk):
     pass

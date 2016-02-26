@@ -7,5 +7,8 @@ urlpatterns = patterns(
     url(r'^terapeutas/edit/(?P<terapeutasitem_pk>\d+)/$', 'terapeutas_edit', name='terapeutas_edit'),
     url(r'^terapeutas/details/(?P<terapeutasitem_pk>\d+)/$', 'terapeutas_details', name='terapeutas_details'),
     url(r'^terapeutas/$', 'terapeutas_list', name='terapeutas_list'),
+    url(r'^terapeutas/especialidad/add/$', 'especialidad_add', name='especialidad_add'),
+    url(r'^terapeutas/especialidades/$', 'especialidad_list', name='especialidad_list'),
+
 
 )

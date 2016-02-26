@@ -1,0 +1,43 @@
+{% extends "base.html"%}
+
+{% load i18n bootstrap3 %}
+{% load staticfiles %}
+
+{%  block page_content  %}
+
+<div class="">
+  <div class="page-title">
+      <div class="title_left">
+          <h3>Listado de especialidades</h3>
+      </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+      <div class="col-md-12">
+          <div class="x_panel">
+              <div class="x_content">
+                  {% for especialidad in especialidades %}
+                    <p>{{ especialidad.nombre }}</p>
+                  {% endfor %}
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+</div>
+
+<!-- footer content -->
+<footer>
+    <div class="">
+        <p class="pull-right">logopedaSUR by <a>@trukise</a>. |
+            <span class="lead"> <i class="fa fa-paw"></i> logopedaSUR </span>
+        </p>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+<!-- /footer content -->
+
+{% endblock  %}}
