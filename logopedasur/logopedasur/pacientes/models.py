@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -18,10 +19,10 @@ class Paciente(models.Model):
     nombre = models.CharField(_('nombre'), max_length=255, null=False)
     apellidos = models.CharField(_('apellidos'), max_length=255, null=False)
     nif = models.CharField(_('nif'), max_length=9, unique=True)
-    fecha_nacimiento = models.DateTimeField(_('Fecha de nacimiento'))
+    fecha_nacimiento = models.DateField(_('Fecha de nacimiento'))
     observaciones = models.TextField(_('observaciones'), blank=True, null=True)
-    fecha_ingreso = models.DateTimeField(_('Fecha de ingreso'),
-                                         auto_now_add=True)
+    fecha_ingreso = models.DateField(_('Fecha de ingreso'),
+                                         default=date.today())
     telefono = models.CharField(_('telefono'), max_length=12, null=True)
     imagen = models.ImageField(upload_to='uploads/', blank=True, null=True)
     terapeutas = models.ManyToManyField(Terapeuta)
