@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -13,7 +14,7 @@ from logopedasur.pacientes.forms import PacientesForm
 def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
     return render_to_response("pacientes/pacientes_details.html",
-                              {'paciente': paciente},
+                              {'paciente': paciente, 'url_base': settings.MEDIA_ROOT},
                               context_instance=RequestContext(request))
 
 

@@ -1,7 +1,7 @@
 # Register your models here.
 from django.contrib import admin
 
-from logopedasur.pacientes.models import Paciente, Tutor, Horario
+from logopedasur.pacientes.models import Paciente, Tutor, Horario, Informe
 
 # Register your models here.
 class PacientesAdmin(admin.ModelAdmin):
@@ -19,7 +19,13 @@ class HorariosAdmin(admin.ModelAdmin):
     search_fields = ('dia','hora_inicio')
     list_filter = ('dia',)
 
+class InformesAdmin(admin.ModelAdmin):
+    list_display = ('fecha_informe', 'tipo', 'informe')
+    search_fields = ('fecha_informe','tipo')
+    list_filter = ('fecha_informe','tipo')
+
 
 admin.site.register(Paciente, PacientesAdmin)
 admin.site.register(Tutor, TutoresAdmin)
 admin.site.register(Horario, HorariosAdmin)
+admin.site.register(Informe, InformesAdmin)

@@ -74,3 +74,28 @@ class Horario(models.Model):
 
     def __str__(self):
         return self.dia +' ' + str(self.hora_inicio) + ' ' + str(self.hora_fin)
+
+
+@python_2_unicode_compatible
+class Informe(models.Model):
+
+    class Meta:
+        verbose_name = _('informe')
+        verbose_name_plural = _('informes')
+
+    INFORME_CHOICES = (
+        ('Externo', u'Externo'),
+        ('Interno', u'Interno'),
+    )
+    informe = models.FileField(upload_to='uploads/')
+    tipo = models.CharField(_(u'tipo'), max_length=9,
+                           choices = INFORME_CHOICES,
+                           null=False)
+    fecha_informe = models.DateField(_('Fecha de informe'))
+    fecha_entrega = models.DateField(_('Fecha de entrega'),
+                                         default=date.today())
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    terapeuta = models.ForeignKey(Terapeuta, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.tipo + ' ' + str(self.fecha_informe) + ' ' + str(self.paciente.nombre) + ' ' + str(self.terapeuta.nombre)
