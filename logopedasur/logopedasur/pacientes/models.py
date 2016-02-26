@@ -23,6 +23,7 @@ class Paciente(models.Model):
     observaciones = models.TextField(_('observaciones'), blank=True, null=True)
     fecha_ingreso = models.DateField(_('Fecha de ingreso'),
                                          default=date.today())
+    email = models.EmailField(_('email'), max_length=254, null=True, blank=True)
     telefono = models.CharField(_('telefono'), max_length=12, null=True)
     imagen = models.ImageField(upload_to='uploads/', blank=True, null=True)
     terapeutas = models.ManyToManyField(Terapeuta)
@@ -30,7 +31,7 @@ class Paciente(models.Model):
     def __str__(self):
         return self.nombre + self.apellidos
 
-
+@python_2_unicode_compatible
 class Tutor(models.Model):
 
     class Meta:
@@ -40,7 +41,36 @@ class Tutor(models.Model):
     nombre = models.CharField(_('nombre'), max_length=255, null=False)
     apellidos = models.CharField(_('apellidos'), max_length=255, null=False)
     nif = models.CharField(_('nif'), max_length=9, unique=True)
+    email = models.EmailField(_('email'), max_length=254, null=True, blank=True)
     pacientes = models.ManyToManyField(Paciente)
 
     def __str__(self):
         return self.nombre + self.apellidos
+
+
+@python_2_unicode_compatible
+class Horario(models.Model):
+
+    class Meta:
+        verbose_name = _('horario')
+        verbose_name_plural = _('horarios')
+
+    DAY_CHOICES = (
+        ('LUNES', u'Lunes'),
+        ('MARTES', u'Martes'),
+        ('MIERCOLES', u'Miercoles'),
+        ('JUEVES', u'Jueves'),
+        ('VIERNES', u'Viernes'),
+        ('SABADO', u'Sabado'),
+        ('DOMINGO', u'Domingo'),
+    )
+    dia = models.CharField(_(u'dia'), max_length=9,
+                           choices = DAY_CHOICES,
+                           null=False)
+    hora_inicio = models.TimeField(_('Hora inicio'), max_length=5, null=False)
+    hora_fin = models.TimeField(_('Hora fin'), max_length=5, null=False)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    terapeuta = models.ForeignKey(Terapeuta, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.dia +' ' + str(self.hora_inicio) + ' ' + str(self.hora_fin)
