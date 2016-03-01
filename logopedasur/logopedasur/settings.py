@@ -130,5 +130,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'logopedasur','static')]
 
-MEDIA_ROOT='/home/trukise/dev/django/vlogopedasur/logopedasur/logopedasur/uploads/'
-MEDIA_URL=''
+MEDIA_URL ='/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),'media')

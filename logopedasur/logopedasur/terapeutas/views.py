@@ -12,8 +12,14 @@ from logopedasur.terapeutas.models import Especialidad
 from logopedasur.terapeutas.forms import TerapeutasForm, EspecialidadesForm
 
 # Create your views here.
+@login_required(login_url='/login/')
+def terapeutas_details(request, terapeutasitem_pk):
+    terapeuta = Terapeuta.objects.get(pk=terapeutasitem_pk)
+    return render_to_response("terapeutas/terapeutas_details.html",
+                              {'terapeuta': terapeuta},
+                              context_instance=RequestContext(request))
 
-
+@login_required(login_url='/login/')
 def terapeutas_list(request):
     terapeutas = Terapeuta.objects.filter().order_by('apellidos')
     return render_to_response("terapeutas/terapeutas_list.html",
@@ -56,10 +62,6 @@ def especialidad_list(request):
     return render_to_response("terapeutas/especialidad_list.html",
                                                             {"especialidades": especialidades},
                                                             context_instance= RequestContext(request))
-
-
-def terapeutas_details(request, terapeutasitem_pk):
-    pass
 
 
 @login_required(login_url='/admin/')

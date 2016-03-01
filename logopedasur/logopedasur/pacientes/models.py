@@ -25,7 +25,7 @@ class Paciente(models.Model):
                                          default=date.today())
     email = models.EmailField(_('email'), max_length=254, null=True, blank=True)
     telefono = models.CharField(_('telefono'), max_length=12, null=True)
-    imagen = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    imagen = models.ImageField(blank=True, null=True)
     terapeutas = models.ManyToManyField(Terapeuta)
 
     def __str__(self):

@@ -14,7 +14,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Datos del paciente</h2>
+                                    <h2>Datos del terapeuta</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a href="#"><i class="fa fa-chevron-up"></i></a>
                                         </li>
@@ -42,7 +42,7 @@
                                             <div id="crop-avatar">
                                                 <!-- Current avatar -->
                                                 <div class="avatar-view" title="Change the avatar">
-                                                    <img src="{{ paciente.imagen.url }}" alt="Paciente">
+                                                    <img src="{% static 'gentelella-theme/images/picture.jpg' %}" alt="Paciente">
                                                 </div>
 
                                                 <!-- Loading state -->
@@ -52,8 +52,8 @@
 
                                         </div>
                                         <h3>
-                                            <p>{{ paciente.nombre }},</p>
-                                            <p>{{ paciente.apellidos }}</p>
+                                            <p>{{ terapeuta.nombre }},</p>
+                                            <p>{{ terapeuta.apellidos }}</p>
                                         </h3>
 
                                         <ul class="list-unstyled user_data">
