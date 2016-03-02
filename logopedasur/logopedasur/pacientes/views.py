@@ -7,8 +7,21 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
-from logopedasur.pacientes.models import Paciente
-from logopedasur.pacientes.forms import PacientesForm
+from logopedasur.pacientes.models import Paciente, Tutor
+from logopedasur.pacientes.forms import PacientesForm, TutoresForm
+
+
+@login_required(login_url="/login/")
+def tutor_add(request):
+    data = None #por si no hubiera un POST
+    if request.method == 'POST':
+        data = request.POST
+    initial = {}
+    form = TutoresForm(data=data, initial=initial)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('pacientes_list'))
+    return render_to_response("pacientes/tutor_add.html",{"form": form},context_instance=RequestContext(request))
 
 
 def pacientes_details(request, pacientesitem_pk):

@@ -1,6 +1,6 @@
 from django import forms
 
-from logopedasur.pacientes.models import Paciente
+from logopedasur.pacientes.models import Paciente, Tutor
 
 class PacientesForm(forms.ModelForm):
 
@@ -15,3 +15,10 @@ class PacientesForm(forms.ModelForm):
     class Meta:
         model = Paciente
         fields = '__all__'
+
+
+class TutoresForm(forms.ModelForm):
+
+    class Meta:
+        model = Tutor
+        fields= '__all__'
