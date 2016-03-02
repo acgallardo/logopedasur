@@ -8,6 +8,7 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
 from logopedasur.pacientes.models import Paciente, Tutor
+from logopedasur.sesiones.models import Sesion
 from logopedasur.pacientes.forms import PacientesForm, TutoresForm
 
 
@@ -34,8 +35,10 @@ def tutor_add(request):
 
 def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
+    sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
     return render_to_response("pacientes/pacientes_details.html",
-                              {'paciente': paciente, 'url_base': settings.MEDIA_ROOT},
+                              {'paciente': paciente,
+                               'sesiones_paciente': sesiones_paciente},
                               context_instance=RequestContext(request))
 
 
