@@ -12,7 +12,7 @@ from logopedasur.pacientes.models import Paciente, Tutor
 
 @python_2_unicode_compatible
 class Sesion(models.Model):
-    ''' Model for table Sessions''''
+    ''' Model for table Sessions'''
 
     class Meta:
         verbose_name = _('sesion')
@@ -27,4 +27,4 @@ class Sesion(models.Model):
 
 
     def __str__(self):
-        return self.paciente.nombre + self.paciente.nombre + self.fecha_sesion + self.hora_inicio
+        return self.paciente.nombre + self.paciente.nombre + str(self.fecha_sesion) + str(self.hora_inicio)

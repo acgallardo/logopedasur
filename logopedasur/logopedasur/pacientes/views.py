@@ -12,6 +12,14 @@ from logopedasur.pacientes.forms import PacientesForm, TutoresForm
 
 
 @login_required(login_url="/login/")
+def tutores_list(request):
+    tutores = Tutor.objects.filter().order_by('apellidos')
+    return render_to_response("pacientes/tutores_list.html",
+                              {'tutores': tutores},
+                              context_instance=RequestContext(request))
+
+
+@login_required(login_url="/login/")
 def tutor_add(request):
     data = None #por si no hubiera un POST
     if request.method == 'POST':
