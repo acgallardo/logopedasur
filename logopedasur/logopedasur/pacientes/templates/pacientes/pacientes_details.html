@@ -125,7 +125,7 @@
                                                                 <td>{{ sesion_paciente.tipo }}
                                                                 <td>{{ sesion_paciente.hora_inicio }}</td>
                                                                 <td>{{ sesion_paciente.hora_fin }}</td>
-                                                                <td>{% if sesion_paciente.facturable %} <b>Si</b>
+                                                                <td>{% if sesion_paciente.tipo.facturable %} <b>Si</b>
                                                                     {% else %} <b style="color:red">No</b>
                                                                     {% endif %}
                                                                 <td> No </td>
