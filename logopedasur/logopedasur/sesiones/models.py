@@ -42,6 +42,7 @@ class Sesion(models.Model):
     hora_inicio = models.TimeField(_('Hora de inicio'))
     hora_fin = models.TimeField(_('Hora de finalizacion'))
     observaciones = models.TextField(_('observaciones'), blank=True, null=True)
+    pagada = models.BooleanField(_(u'Pagada'), default=False)
 
 
     def __str__(self):
