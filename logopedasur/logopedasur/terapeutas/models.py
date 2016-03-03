@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
 
 # Create your models here.
 @python_2_unicode_compatible
@@ -27,6 +28,7 @@ class Terapeuta(models.Model):
         verbose_name = _('terapeuta')
         verbose_name_plural = _('terapeutas')
 
+    user = models.ForeignKey(User, unique=True, null=True)
     nombre = models.CharField(_('nombre'), max_length=255, null=False)
     apellidos = models.CharField(_('apellidos'), max_length=255, null=False)
     nif = models.CharField(_('nif'), max_length=9, unique=True)
