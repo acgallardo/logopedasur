@@ -1,0 +1,137 @@
+{% extends "base.html"%}
+
+{% load i18n bootstrap3 %}
+{% load staticfiles %}
+
+{%  block page_content  %}
+
+
+<div class="">
+
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Datos del tutor</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a href="#"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Settings 1</a>
+                                                </li>
+                                                <li><a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+
+                                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+
+                                        <div class="profile_img">
+
+                                            <!-- end of image cropping -->
+                                            <div id="crop-avatar">
+                                                <!-- Current avatar -->
+                                                <div class="avatar-view" title="Change the avatar">
+                                                    <img src="{{ tutor.imagen.url }}" alt="Tutor">
+                                                </div>
+
+                                                <!-- Loading state -->
+                                                <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+                                            </div>
+                                            <!-- end of image cropping -->
+
+                                        </div>
+                                        <h3>
+                                            <p>{{ tutor.nombre }},</p>
+                                            <p>{{ tutor.apellidos }}</p>
+                                        </h3>
+
+                                        <ul class="list-unstyled user_data">
+                                            <li><i class="fa fa-credit-card user-profile-icon"></i> {{ tutor.nif }}
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-envelope user-profile-icon"></i> {{ tutor.email }}
+                                            </li>
+
+                                            <li class="m-top-xs">
+                                                <i class="fa fa-external-link user-profile-icon"></i>
+                                                <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
+                                            </li>
+                                        </ul>
+
+                                        <a class="btn btn-success right"><i class="fa fa-edit m-right-xs"></i> {% trans "Editar tutor" %}</a>
+                                        <br />
+
+                                        <!-- start skills -->
+
+
+                                        <!-- end of skills -->
+
+                                    </div>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                                <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{% trans "Hijos/as o tulelados/as" %}</a>
+                                                </li>
+                                            </ul>
+                                            <div id="myTabContent" class="tab-content">
+                                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                                  <table class="data table table-striped no-margin">
+                                                      <thead>
+                                                          <tr>
+                                                              <th>Nombre</th>
+                                                              <th>Apellidos</th>
+                                                              <th>Estado</th>
+                                                              <th>Acciones</th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        {% for sesion_paciente in sesiones_paciente %}
+                                                          <tr>
+                                                              <td>{{ sesion_paciente.fecha_sesion }}</td>
+                                                              <td>{{ sesion_paciente.tipo }}
+                                                              <td>{{ sesion_paciente.hora_inicio }}</td>
+                                                              <td>{{ sesion_paciente.hora_fin }}</td>
+                                                              <td>{% if sesion_paciente.tipo.facturable %} <b>Si</b>
+                                                                  {% else %} <b style="color:red">No</b>
+                                                                  {% endif %}
+                                                              <td> No </td>
+                                                          </tr>
+                                                        {% endfor %}
+                                                      </tbody>
+                                                  </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</div>
+
+<!-- footer content -->
+<footer>
+    <div class="">
+        <p class="pull-right">logopedaSUR by <a>@trukise</a>. |
+            <span class="lead"> <i class="fa fa-paw"></i> logopedaSUR </span>
+        </p>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+<!-- /footer content -->
+
+{% endblock  %}}

@@ -32,7 +32,15 @@ def tutor_add(request):
         return HttpResponseRedirect(reverse('pacientes_list'))
     return render_to_response("pacientes/tutor_add.html",{"form": form},context_instance=RequestContext(request))
 
+@login_required(login_url="/login")
+def tutores_details(request, tutoresitem_pk):
+    tutor = Tutor.objects.get(pk=tutoresitem_pk)
+    return render_to_response("pacientes/tutores_details.html",
+                               {'tutor': tutor},
+                               context_instance=RequestContext(request))
 
+
+@login_required(login_url="/login")
 def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
     sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)

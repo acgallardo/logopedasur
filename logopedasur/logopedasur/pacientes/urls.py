@@ -10,5 +10,6 @@ urlpatterns = patterns(
     url(r'^pacientes/$', 'pacientes_list', name='pacientes_list'),
     url(r'^pacientes/tutor/add/$', 'tutor_add', name='tutor_add'),
     url(r'^pacientes/tutores/$', 'tutores_list', name='tutores_list'),
+    url(r'^pacientes/tutores/details/(?P<tutoresitem_pk>\d+)/$', 'tutores_details', name='tutores_details'),
 
 )
