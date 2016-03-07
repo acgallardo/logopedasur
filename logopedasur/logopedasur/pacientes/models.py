@@ -16,6 +16,12 @@ class Paciente(models.Model):
         verbose_name = _('paciente')
         verbose_name_plural = _('pacientes')
 
+    ESTADO_CHOICES = (
+        ('ALTA', u'Alta'),
+        ('EN TRATAMIENTO', u'En tratamiento'),
+        ('OTRO', u'Otro'),
+    )
+
     nombre = models.CharField(_('nombre'), max_length=255, null=False)
     apellidos = models.CharField(_('apellidos'), max_length=255, null=False)
     nif = models.CharField(_('nif'), max_length=9, unique=True)
@@ -26,6 +32,9 @@ class Paciente(models.Model):
     email = models.EmailField(_('email'), max_length=254, null=True, blank=True)
     telefono = models.CharField(_('telefono'), max_length=12, null=True)
     imagen = models.ImageField(blank=True, null=True)
+    estado = models.CharField(_(u'estado'), max_length=15,
+                           choices = ESTADO_CHOICES, default='En tratamiento',
+                           null=False)
     terapeutas = models.ManyToManyField(Terapeuta)
 
     def __str__(self):
