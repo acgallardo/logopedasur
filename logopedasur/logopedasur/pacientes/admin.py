@@ -1,7 +1,7 @@
 # Register your models here.
 from django.contrib import admin
 
-from logopedasur.pacientes.models import Paciente, Tutor, Horario, Informe
+from logopedasur.pacientes.models import Paciente, Tutor, Horario, Informe, Direccion_Facturacion
 
 # Register your models here.
 class PacientesAdmin(admin.ModelAdmin):
@@ -24,8 +24,12 @@ class InformesAdmin(admin.ModelAdmin):
     search_fields = ('fecha_informe','tipo')
     list_filter = ('fecha_informe','tipo')
 
+class Direccion_FacturacionAdmin(admin.ModelAdmin):
+    list_display = ('nombre_completo', 'nif', 'direccion', 'localidad', 'cod_postal', 'provincia')
+    search_fields = ('nombre_completo', 'nif',)
 
 admin.site.register(Paciente, PacientesAdmin)
 admin.site.register(Tutor, TutoresAdmin)
 admin.site.register(Horario, HorariosAdmin)
 admin.site.register(Informe, InformesAdmin)
+admin.site.register(Direccion_Facturacion, Direccion_FacturacionAdmin)

@@ -31,6 +31,26 @@ class Paciente(models.Model):
     def __str__(self):
         return self.nombre + self.apellidos
 
+
+@python_2_unicode_compatible
+class Direccion_Facturacion(models.Model):
+
+    class Meta:
+        verbose_name = _('direccion facturacion')
+        verbose_name_plural = _('direcciones de facturacion')
+
+    nombre_completo = models.CharField(_('Nombre facturacion'), max_length=255, null=False, blank=False)
+    nif = models.CharField(_('NIF facturacion'), max_length=9, null=False, blank=False)
+    direccion = models.CharField(_('Direccion facturacion'), max_length=255, null=True, blank=True)
+    cod_postal = models.CharField(_('Codigo postal'), max_length=5, null=True, blank=True)
+    localidad = models.CharField(_('localidad'), max_length=255, null=True, blank=True)
+    provincia = models.CharField(_('provincia'), max_length=255, null=True, blank=True)
+    email = models.EmailField(_('email'), max_length=254, null=True, blank=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre_completo + ' ' + self.nif
+
 @python_2_unicode_compatible
 class Tutor(models.Model):
 

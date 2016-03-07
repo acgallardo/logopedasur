@@ -91,23 +91,20 @@
                                                   <table class="data table table-striped no-margin">
                                                       <thead>
                                                           <tr>
-                                                              <th>Nombre</th>
-                                                              <th>Apellidos</th>
-                                                              <th>Estado</th>
-                                                              <th>Acciones</th>
+                                                              <th>{% trans Nombre %}</th>
+                                                              <th>{% trans Apellidos %}</th>
+                                                              <th>{% trans Estado %}</th>
+                                                              <th>{% trans Acciones %}</th>
                                                           </tr>
                                                       </thead>
                                                       <tbody>
-                                                        {% for sesion_paciente in sesiones_paciente %}
+                                                        {% for paciente in pacientes %}
                                                           <tr>
-                                                              <td>{{ sesion_paciente.fecha_sesion }}</td>
-                                                              <td>{{ sesion_paciente.tipo }}
-                                                              <td>{{ sesion_paciente.hora_inicio }}</td>
-                                                              <td>{{ sesion_paciente.hora_fin }}</td>
-                                                              <td>{% if sesion_paciente.tipo.facturable %} <b>Si</b>
-                                                                  {% else %} <b style="color:red">No</b>
-                                                                  {% endif %}
-                                                              <td> No </td>
+                                                              <td>{{ paciente.nombre }}</td>
+                                                              <td>{{ paciente.apellidos }}
+                                                              <td>{{ paciente.estado }}</td>
+                                                              <td><a href="{% url "pacientes_details" paciente.pk %}" class="btn btn-sm btn-primary">Ver</a></td>
+
                                                           </tr>
                                                         {% endfor %}
                                                       </tbody>

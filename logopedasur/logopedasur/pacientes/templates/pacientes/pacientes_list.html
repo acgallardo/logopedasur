@@ -71,7 +71,12 @@
                                       </ul>
                                   </div>
                                   <div class="right col-xs-5 text-center">
-                                      <img src="{% static 'gentelella-theme/images/user.png' %}" alt="" class="img-circle img-responsive">
+                                    {% if paciente.imagen == "" %}
+                                      <img src="{% static 'gentelella-theme/images/user.png' %}" alt="" class="img-circle img-responsive" style="height:100px;weight:100px" >
+                                    {% else %}
+                                      <img src="{{ paciente.imagen.url }}" alt="" class="img-circle img-responsive" style="height:100px;weight:100px">
+                                    {% endif %}
+
                                   </div>
                               </div>
                               <div class="col-xs-12 bottom text-left">

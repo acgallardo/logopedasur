@@ -35,8 +35,10 @@ def tutor_add(request):
 @login_required(login_url="/login")
 def tutores_details(request, tutoresitem_pk):
     tutor = Tutor.objects.get(pk=tutoresitem_pk)
+    pacientes = Paciente.objects.filter(tutor__pk=tutoresitem_pk)
     return render_to_response("pacientes/tutores_details.html",
-                               {'tutor': tutor},
+                               {'tutor': tutor,
+                                'pacientes': pacientes},
                                context_instance=RequestContext(request))
 
 
