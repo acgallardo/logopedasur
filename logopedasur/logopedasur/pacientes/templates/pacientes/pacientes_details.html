@@ -122,20 +122,49 @@
                                                           {% for sesion_paciente in sesiones_paciente %}
                                                             <tr>
                                                                 <td>{{ sesion_paciente.fecha_sesion }}</td>
-                                                                <td>{{ sesion_paciente.tipo }}
+                                                                <td>{{ sesion_paciente.tipo.nombre }}</td>
                                                                 <td>{{ sesion_paciente.hora_inicio }}</td>
                                                                 <td>{{ sesion_paciente.hora_fin }}</td>
                                                                 <td>{% if sesion_paciente.tipo.facturable %} <b>Si</b>
                                                                     {% else %} <b style="color:red">No</b>
-                                                                    {% endif %}
-                                                                <td> No </td>
+                                                                    {% endif %}</td>
+                                                                <td>{% if sesion_paciente.pagada %}
+                                                                          <span class="label label-success">{% trans "Pagada"  %}</span>
+                                                                    {% elif sesion_paciente.facturable %}
+                                                                          <span class="label label-danger">{% trans "No pagada"  %}</span>
+                                                                    {% else %}
+                                                                          <span class="label label-success">{% trans "No pagada"  %}</span>
+                                                                    {% endif %}</td>
+
                                                             </tr>
                                                           {% endfor %}
                                                         </tbody>
                                                     </table>
                                                     <!-- end user projects -->
                                                     <div class="clearfix"></div>
-                                                    <a class="btn btn-success right"><i class="fa fa-calendar m-right-xs"></i> {% trans "Nueva sesión" %}</a>
+                                                    <a class="btn btn-success right" data-toggle="modal" data-target="#myModal"><i class="fa fa-calendar m-right-xs"></i> {% trans "Nueva sesión" %}</a>
+                                                    <!-- Modal -->
+                                                      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                              <h4 class="modal-title" id="myModalLabel">{% trans "Nueva sesión" %}</h4>
+                                                            </div>
+                                                            <form action="." method="post" class="form">
+                                                              <div class="modal-body">
+                                                                  {% csrf_token %}
+                                                                  {% bootstrap_form formNuevaSesion %}
+                                                             </div>
+                                                              <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-success">{% trans "Insertar sesión" %}</button>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Cerrar" %}</button>
+                                                              </div>
+                                                            </form>
+
+                                                          </div>
+                                                        </div>
+                                                      </div>
                                                     <br />
                                                 </div>
                                                 <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">

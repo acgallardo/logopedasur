@@ -11,6 +11,7 @@ from logopedasur.pacientes.models import Paciente, Tutor
 from logopedasur.sesiones.models import Sesion
 from logopedasur.pacientes.forms import PacientesForm, TutoresForm
 
+from logopedasur.sesiones.forms import SesionesForm
 
 @login_required(login_url="/login/")
 def tutores_list(request):
@@ -46,9 +47,14 @@ def tutores_details(request, tutoresitem_pk):
 def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
     sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
+    data = None
+    initial = {}
+    formNuevaSesion = SesionesForm(data=data, initial=initial)
+
     return render_to_response("pacientes/pacientes_details.html",
                               {'paciente': paciente,
-                               'sesiones_paciente': sesiones_paciente},
+                               'sesiones_paciente': sesiones_paciente,
+                               'formNuevaSesion': formNuevaSesion},
                               context_instance=RequestContext(request))
 
 

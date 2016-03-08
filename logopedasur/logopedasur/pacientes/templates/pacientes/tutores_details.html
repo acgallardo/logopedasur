@@ -91,10 +91,10 @@
                                                   <table class="data table table-striped no-margin">
                                                       <thead>
                                                           <tr>
-                                                              <th>{% trans Nombre %}</th>
-                                                              <th>{% trans Apellidos %}</th>
-                                                              <th>{% trans Estado %}</th>
-                                                              <th>{% trans Acciones %}</th>
+                                                              <th>{% trans "Nombre" %}</th>
+                                                              <th>{% trans "Apellidos" %}</th>
+                                                              <th>{% trans "Estado" %}</th>
+                                                              <th>{% trans "Acciones" %}</th>
                                                           </tr>
                                                       </thead>
                                                       <tbody>
@@ -102,8 +102,14 @@
                                                           <tr>
                                                               <td>{{ paciente.nombre }}</td>
                                                               <td>{{ paciente.apellidos }}
-                                                              <td>{{ paciente.estado }}</td>
-                                                              <td><a href="{% url "pacientes_details" paciente.pk %}" class="btn btn-sm btn-primary">Ver</a></td>
+                                                              <td>{% if paciente.estado = "En tratamiento" %}
+                                                                        <span class="label label-info">{{ paciente.estado }}</span></td>
+                                                                  {% elif paciente.estado = "ALTA" %}
+                                                                        <span class="label label-success">{{ paciente.estado }}</span></td>
+                                                                  {% else %}
+                                                                        <span class="label label-warning">{{ paciente.estado }}</span></td>
+                                                                  {% endif %}
+                                                              <td><a href="{% url "pacientes_details" paciente.pk %}" class="btn btn-xs btn-primary">Ver</a></td>
 
                                                           </tr>
                                                         {% endfor %}
