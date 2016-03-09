@@ -57,7 +57,7 @@ def pacientes_details(request, pacientesitem_pk):
                                'formNuevaSesion': formNuevaSesion},
                               context_instance=RequestContext(request))
 
-
+@login_required(login_url="/login")
 def pacientes_list(request):
     pacientes = Paciente.objects.filter().order_by('apellidos')
     return render_to_response("pacientes/pacientes_list.html",
