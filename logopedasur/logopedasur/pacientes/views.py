@@ -10,8 +10,7 @@ from django.template import RequestContext
 from logopedasur.pacientes.models import Paciente, Tutor
 from logopedasur.sesiones.models import Sesion
 from logopedasur.pacientes.forms import PacientesForm, TutoresForm
-
-from logopedasur.sesiones.forms import SesionesForm
+from logopedasur.sesiones.forms import SesionesForm, nuevaSesionForm
 
 @login_required(login_url="/login/")
 def tutores_list(request):
@@ -33,7 +32,7 @@ def tutor_add(request):
         return HttpResponseRedirect(reverse('pacientes_list'))
     return render_to_response("pacientes/tutor_add.html",{"form": form},context_instance=RequestContext(request))
 
-@login_required(login_url="/login")
+@login_required(login_url="/login/")
 def tutores_details(request, tutoresitem_pk):
     tutor = Tutor.objects.get(pk=tutoresitem_pk)
     pacientes = Paciente.objects.filter(tutor__pk=tutoresitem_pk)
@@ -43,13 +42,13 @@ def tutores_details(request, tutoresitem_pk):
                                context_instance=RequestContext(request))
 
 
-@login_required(login_url="/login")
+@login_required(login_url="/login/")
 def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
     sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
     data = None
     initial = {}
-    formNuevaSesion = SesionesForm(data=data, initial=initial)
+    formNuevaSesion = nuevaSesionForm(data=data, initial=initial)
 
     return render_to_response("pacientes/pacientes_details.html",
                               {'paciente': paciente,
@@ -90,4 +89,17 @@ def pacientes_edit(request, pacientesitem_pk):
         return HttpResponseRedirect(reverse('pacientes_list'))
     return render_to_response("pacientes/pacientes_add.html",{'form': form},context_instance=RequestContext(request))
 
+@login_required(login_url="/admin/")
+def pacientes_sesion_add(request, pacientesitem_pk):
+    data = None #por si no hubiera un POST
+    if request.method == 'POST':
+        data = request.POST
+        initial = {}
+        form = nuevaSesionForm(data=data, initial=initial)
+        form.fields['paciente'] = Paciente.objects.get(pacientesitem_pk)
+        if form.is_valid():
+            sesion= form.save(commit=False)
+            sesion.paciente = request.paciente
+            sesion.save()
+            return HttpResponseRedirect(reverse(request.next))
 # Create your views here.

@@ -151,10 +151,11 @@
                                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                               <h4 class="modal-title" id="myModalLabel">{% trans "Nueva sesión" %}</h4>
                                                             </div>
-                                                            <form action="." method="post" class="form">
+                                                            <form action="/pacientes/details/{{ paciente.pk }}/sesion/add/" method="post" class="form">
                                                               <div class="modal-body">
                                                                   {% csrf_token %}
                                                                   {% bootstrap_form formNuevaSesion %}
+
                                                              </div>
                                                               <div class="modal-footer">
                                                                 <button type="submit" class="btn btn-success">{% trans "Insertar sesión" %}</button>
