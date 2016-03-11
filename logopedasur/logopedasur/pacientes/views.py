@@ -46,18 +46,15 @@ def tutores_details(request, tutoresitem_pk):
 def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
     sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
-    # Create nnuevaSesionForm and only show the patient relationed
-    # on manytomany form field, using initial values, a populate "paciente"
-    # fields with specified values with a queryset
     data = None
-    initial = {'paciente': Paciente.objects.get(pk=pacientesitem_pk)}
+    initial = {}
     formNuevaSesion = nuevaSesionForm(data=data, initial=initial)
-    formNuevaSesion.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
+
     return render_to_response("pacientes/pacientes_details.html",
                               {'paciente': paciente,
                                'sesiones_paciente': sesiones_paciente,
                                'formNuevaSesion': formNuevaSesion},
-                               context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))
 
 @login_required(login_url="/login")
 def pacientes_list(request):
@@ -99,7 +96,10 @@ def pacientes_sesion_add(request, pacientesitem_pk):
         data = request.POST
         initial = {}
         form = nuevaSesionForm(data=data, initial=initial)
+        form.fields['paciente'] = Paciente.objects.get(pacientesitem_pk)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('pacientes_list'))
+            sesion= form.save(commit=False)
+            sesion.paciente = request.paciente
+            sesion.save()
+            return HttpResponseRedirect(request.POST.next)
 # Create your views here.

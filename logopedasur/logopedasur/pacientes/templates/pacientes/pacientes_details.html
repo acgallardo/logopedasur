@@ -155,7 +155,7 @@
                                                               <div class="modal-body">
                                                                   {% csrf_token %}
                                                                   {% bootstrap_form formNuevaSesion %}
-
+                                                                  <input type="hidden" name="next" value="/pacientes/details/{{ paciente.pk }}/" />
                                                              </div>
                                                               <div class="modal-footer">
                                                                 <button type="submit" class="btn btn-success">{% trans "Insertar sesión" %}</button>
