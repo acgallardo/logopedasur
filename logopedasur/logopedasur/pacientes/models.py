@@ -116,15 +116,15 @@ class Informe(models.Model):
         ('Externo', u'Externo'),
         ('Interno', u'Interno'),
     )
-    informe = models.FileField(upload_to='uploads/')
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    terapeuta = models.ForeignKey(Terapeuta, on_delete=models.SET_NULL, null=True)
     tipo = models.CharField(_(u'tipo'), max_length=9,
                            choices = INFORME_CHOICES,
                            null=False)
     fecha_informe = models.DateField(_('Fecha de informe'))
     fecha_entrega = models.DateField(_('Fecha de entrega'),
-                                         default=date.today())
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-    terapeuta = models.ForeignKey(Terapeuta, on_delete=models.SET_NULL, null=True)
+                                        default=date.today())
+    informe = models.FileField()
 
     def __str__(self):
         return self.tipo + ' ' + str(self.fecha_informe) + ' ' + str(self.paciente.nombre) + ' ' + str(self.terapeuta.nombre)

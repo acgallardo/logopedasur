@@ -91,9 +91,17 @@
 
                                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                             <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                                <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{% trans "Observaciones" %}</a>
+                                                <li role="presentation" class="{% if tab_active == "observaciones" %}
+                                                                                      active
+                                                                               {% else %}
+                                                                                      ''
+                                                                               {% endif %}"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{% trans "Observaciones" %}</a>
                                                 </li>
-                                                <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">{% trans "Sesiones" %}</a>
+                                                <li role="presentation" class="{% if tab_active == "sesiones" %}
+                                                                                      active
+                                                                               {% else %}
+                                                                                      ''
+                                                                               {% endif %}"><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">{% trans "Sesiones" %}</a>
                                                 </li>
                                                 <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">{% trans "Informes" %}</a>
                                                 </li>
@@ -101,10 +109,18 @@
                                                 </li>
                                             </ul>
                                             <div id="myTabContent" class="tab-content">
-                                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                                <div role="tabpanel" class="tab-pane fade {% if tab_active == "observaciones" %}
+                                                                                            active in
+                                                                                          {% else %}
+                                                                                            ''
+                                                                                          {% endif %}" id="tab_content1" aria-labelledby="home-tab">
                                                   {{ paciente.observaciones }}
                                                 </div>
-                                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                                <div role="tabpanel" class="tab-pane fade {% if tab_active == "sesiones" %}
+                                                                                            active in
+                                                                                          {% else %}
+                                                                                            ''
+                                                                                          {% endif %}" id="tab_content2" aria-labelledby="profile-tab">
 
                                                     <!-- start user projects -->
                                                     <table class="data table table-striped no-margin">
@@ -155,7 +171,6 @@
                                                               <div class="modal-body">
                                                                   {% csrf_token %}
                                                                   {% bootstrap_form formNuevaSesion %}
-                                                                  <input type="hidden" name="next" value="/pacientes/details/{{ paciente.pk }}/" />
                                                              </div>
                                                               <div class="modal-footer">
                                                                 <button type="submit" class="btn btn-success">{% trans "Insertar sesión" %}</button>
@@ -169,7 +184,30 @@
                                                     <br />
                                                 </div>
                                                 <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                                                    <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk </p>
+                                                  <!-- start user projects -->
+                                                  <table class="data table table-striped no-margin">
+                                                      <thead>
+                                                          <tr>
+                                                              <th>Fecha informe</th>
+                                                              <th>Fecha entrega</th>
+                                                              <th>Tipo</th>
+                                                              <th>Terapeuta</th>
+                                                              <th>Informe</th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        {% for informe_paciente in informes_paciente %}
+                                                          <tr>
+                                                              <td>{{ informe_paciente.fecha_informe }}</td>
+                                                              <td>{{ informe_paciente.fecha_entrega }}</td>
+                                                              <td><span class="label label-success">{{ informe_paciente.tipo }}</span></td>
+                                                              <td>{{ informe_paciente.terapeuta }}</td>
+                                                              <td><a href="{{ informe_paciente.informe.url }}" target="blank" class="btn btn-info btn-xs"><i class="fa fa-eye"> Ver </i></a></td>
+                                                          </tr>
+                                                        {% endfor %}
+                                                      </tbody>
+                                                  </table>
+                                                  <!-- end user projects -->
                                                 </div>
                                             </div>
                                         </div>

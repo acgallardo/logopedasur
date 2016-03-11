@@ -7,9 +7,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
-from logopedasur.pacientes.models import Paciente, Tutor
+from logopedasur.pacientes.models import Paciente, Tutor, Informe
 from logopedasur.sesiones.models import Sesion
-from logopedasur.pacientes.forms import PacientesForm, TutoresForm
+from logopedasur.pacientes.forms import PacientesForm, TutoresForm, NuevoInformeForm
 from logopedasur.sesiones.forms import SesionesForm, nuevaSesionForm
 
 @login_required(login_url="/login/")
@@ -46,17 +46,29 @@ def tutores_details(request, tutoresitem_pk):
 def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
     sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
+    informes_paciente = Informe.objects.filter(paciente__pk=pacientesitem_pk)
     # Create nnuevaSesionForm and only show the patient relationed
     # on manytomany form field, using initial values, a populate "paciente"
     # fields with specified values with a queryset
-    data = None
-    initial = {'paciente': Paciente.objects.get(pk=pacientesitem_pk)}
-    formNuevaSesion = nuevaSesionForm(data=data, initial=initial)
+    data_sesion = None
+    initial_sesion = {'paciente': Paciente.objects.get(pk=pacientesitem_pk)}
+    formNuevaSesion = nuevaSesionForm(data=data_sesion, initial=initial_sesion)
     formNuevaSesion.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
+
+    # Create NuevoInformeForm and only show the patient relationed
+    # using initial values, and populate "paciente"
+    # fields with specified values with a queryset
+    data_informe = None
+    initial_informe = {'paciente': Paciente.objects.get(pk=pacientesitem_pk)}
+    formNuevoInforme = NuevoInformeForm(data=data_informe, initial=initial_informe)
+    formNuevoInforme.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
     return render_to_response("pacientes/pacientes_details.html",
                               {'paciente': paciente,
                                'sesiones_paciente': sesiones_paciente,
-                               'formNuevaSesion': formNuevaSesion},
+                               'informes_paciente': informes_paciente,
+                               'formNuevaSesion': formNuevaSesion,
+                               'formNuevoInforme': formNuevoInforme,
+                               'tab_active': 'observaciones'},
                                context_instance=RequestContext(request))
 
 @login_required(login_url="/login")
@@ -101,4 +113,15 @@ def pacientes_sesion_add(request, pacientesitem_pk):
         form = nuevaSesionForm(data=data, initial=initial)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(request.POST.next)
+        paciente = Paciente.objects.get(pk=pacientesitem_pk)
+        sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
+        data = None
+        initial = {'paciente': Paciente.objects.get(pk=pacientesitem_pk)}
+        formNuevaSesion = nuevaSesionForm(data=data, initial=initial)
+        formNuevaSesion.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
+        return render_to_response("pacientes/pacientes_details.html",
+                                  {'paciente': paciente,
+                                   'sesiones_paciente': sesiones_paciente,
+                                   'formNuevaSesion': formNuevaSesion,
+                                   'tab_active': "sesiones"},
+                                   context_instance=RequestContext(request))

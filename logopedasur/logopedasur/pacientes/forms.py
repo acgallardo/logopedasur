@@ -1,6 +1,6 @@
 from django import forms
 
-from logopedasur.pacientes.models import Paciente, Tutor
+from logopedasur.pacientes.models import Paciente, Tutor, Informe
 
 class PacientesForm(forms.ModelForm):
 
@@ -21,4 +21,15 @@ class TutoresForm(forms.ModelForm):
 
     class Meta:
         model = Tutor
-        fields= '__all__'
+        fields = '__all__'
+
+
+class NuevoInformeForm(forms.ModelForm):
+    '''
+        Class that create a form to insert a new report (PDF file)
+        to a specific patient
+    '''
+
+    class Meta:
+        model = Informe
+        fields = ('paciente', 'terapeuta', 'tipo', 'fecha_informe', 'fecha_entrega', 'informe')
