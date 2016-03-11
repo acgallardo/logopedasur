@@ -35,7 +35,8 @@ class Sesion(models.Model):
         verbose_name = _('sesion')
         verbose_name_plural = _('sesiones')
 
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,
+                                 null=False)
     tipo = models.ForeignKey(Sesiontipo, on_delete=models.SET_NULL, null=True)
     terapeutas = models.ManyToManyField(Terapeuta)
     fecha_sesion = models.DateField(_('Fecha de sesion'))
