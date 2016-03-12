@@ -9,6 +9,7 @@ from django.template import RequestContext
 
 from logopedasur.pacientes.models import Paciente, Tutor, Informe
 from logopedasur.sesiones.models import Sesion
+from logopedasur.facturacion.models import Factura, FacturaDetalle
 from logopedasur.pacientes.forms import PacientesForm, TutoresForm, NuevoInformeForm
 from logopedasur.sesiones.forms import SesionesForm, nuevaSesionForm
 
@@ -47,6 +48,7 @@ def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
     sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
     informes_paciente = Informe.objects.filter(paciente__pk=pacientesitem_pk)
+    facturas_paciente = Factura.objects.filter(paciente__pk=pacientesitem_pk)
     # Create nnuevaSesionForm and only show the patient relationed
     # on manytomany form field, using initial values, a populate "paciente"
     # fields with specified values with a queryset
@@ -66,6 +68,7 @@ def pacientes_details(request, pacientesitem_pk):
                               {'paciente': paciente,
                                'sesiones_paciente': sesiones_paciente,
                                'informes_paciente': informes_paciente,
+                               'facturas_paciente': facturas_paciente,
                                'formNuevaSesion': formNuevaSesion,
                                'formNuevoInforme': formNuevoInforme,
                                'tab_active': 'observaciones'},
