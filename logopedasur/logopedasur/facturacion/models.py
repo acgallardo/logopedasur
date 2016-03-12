@@ -25,5 +25,9 @@ class Factura(models.Model):
     iva =  models.DecimalField(_(u'iva'), max_digits=5, decimal_places=3)
     bruto = models.DecimalField(_(u'bruto'), max_digits=8, decimal_places=2, null=False)
     pagada = models.BooleanField(_(u'Pagada'), default=False)
-    direccion = models.ForeignKey(Direccion_Facturacion, on_delete=SET_NULL, null=True, blank=True)
+    direccion = models.ForeignKey(Direccion_Facturacion, on_delete=models.SET_NULL, null=True, blank=True)
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return self.pk + " " + self.titulo
