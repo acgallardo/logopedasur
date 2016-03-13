@@ -1,4 +1,7 @@
 from __future__ import unicode_literals
+
+from decimal import *
+
 from datetime import date
 from django.db import models
 from django.template.defaultfilters import floatformat
@@ -25,8 +28,7 @@ class Factura(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
     direccion = models.ForeignKey(Direccion_Facturacion, on_delete=models.SET_NULL, null=True, blank=True)
     neto = models.DecimalField(_(u'neto'), max_digits=8, decimal_places=2, null=True, blank=True)
-    iva =  models.DecimalField(_(u'iva'), max_digits=5, decimal_places=3, null=True, blank=True)
-    bruto = models.DecimalField(_(u'bruto'), max_digits=8, decimal_places=2, null=True, blank=True)
+    tipo_iva =  models.DecimalField(_(u'iva'), max_digits=5, decimal_places=3, null=True, blank=True)
     descuento = models.DecimalField(_(u'descuento'), max_digits=5, decimal_places=2, null=True, blank=True, default=0)
     pagada = models.BooleanField(_(u'Pagada'), default=False)
 
@@ -49,8 +51,25 @@ class Factura(models.Model):
 
     codigo = property(__get_codigo_factura)
 
+    def __get_cantidad_iva(self):
+        '''
+            obtain amount of money in taxes (iva)
+        '''
+        return self.neto * (self.tipo_iva / 100)
+
+    cantidad_iva = property(__get_cantidad_iva)
+
+    def __get_bruto(self):
+        '''
+           subtotal = neto + cantidad_iva
+        '''
+        return floatformat(Decimal(self.neto) + self.__get_cantidad_iva(),2)
+
+    bruto = property(__get_bruto)
+
     def __get_total(self):
-        return floatformat(self.bruto - (self.bruto * (self.descuento/100)),2)
+        cantidad_descuento = float(self.__get_bruto()) * float(self.descuento/100)
+        return floatformat(self.__get_bruto() - cantidad_descuento,2)
 
     total = property(__get_total)
 
