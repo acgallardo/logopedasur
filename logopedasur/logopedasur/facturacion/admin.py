@@ -5,7 +5,7 @@ from logopedasur.facturacion.models import Factura, FacturaDetalle
 # Register your models here.
 
 class FacturasAdmin(admin.ModelAdmin):
-    list_display = ('codigo', 'paciente', 'fecha',  'titulo', 'neto',
+    list_display = ('codigo', 'paciente', 'fecha',  'titulo', 'neto', 'neto2',
                     'tipo_iva', 'cantidad_iva', 'bruto', 'descuento', 'total')
     search_fields = ('codigo', 'fecha', 'titulo', 'paciente',)
     list_filter = ('fecha',)

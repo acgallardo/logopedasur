@@ -4,6 +4,7 @@ from decimal import *
 
 from datetime import date
 from django.db import models
+from django.db.models import Sum, Count
 from django.template.defaultfilters import floatformat
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -51,6 +52,18 @@ class Factura(models.Model):
 
     codigo = property(__get_codigo_factura)
 
+    def __get_neto(self):
+
+        query_neto = FacturaDetalle.objects.filter(
+            codigo_factura_id=self.pk).aggregate(suma_neto=Sum('total'))
+        if query_neto['suma_neto'] == None:
+            return 0
+        else:
+            return format(Decimal(query_neto['suma_neto']), '.2f')
+
+    neto2 = property(__get_neto)
+
+
     def __get_cantidad_iva(self):
         '''
             obtain amount of money in taxes (iva)
@@ -88,24 +101,10 @@ class FacturaDetalle(models.Model):
     concepto = models.TextField(_(u'concepto'), null=False, blank=True)
     precio = models.DecimalField(_(u'neto'), max_digits=8, decimal_places=2, null=True, blank=True)
     cantidad = models.DecimalField(_(u'cantidad'), max_digits=6, decimal_places=0, null=True, blank=True)
+    sub_total = models.DecimalField(_(u'sub_total'), max_digits=6, decimal_places=0, null=True, blank=True)
     descuento = models.DecimalField(_(u'descuento'), max_digits=5, decimal_places=2, null=True, blank=True)
+    total = models.DecimalField(_(u'total'), max_digits=6, decimal_places=0, null=True, blank=True)
 
-
-    def __get_subtotal(self):
-        '''
-            Calculate sub_total = precio * cantidad
-        '''
-        return self.precio * self.cantidad
-
-    sub_total = property(__get_subtotal)
-
-    def __get_total(self):
-        '''
-            Calculate total = precio * cantidad - %descuento
-        '''
-        return floatformat(self.__get_subtotal() - (self.__get_subtotal() * (self.descuento/100)),2)
-
-    total = property(__get_total)
 
     def __str__(self):
         return self.concepto + " " + str(self.total)

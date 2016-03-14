@@ -33,3 +33,5 @@ class NuevoInformeForm(forms.ModelForm):
     class Meta:
         model = Informe
         fields = ('paciente', 'terapeuta', 'tipo', 'fecha_informe', 'fecha_entrega', 'informe')
+
+    
