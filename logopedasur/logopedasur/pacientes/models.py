@@ -38,7 +38,7 @@ class Paciente(models.Model):
     terapeutas = models.ManyToManyField(Terapeuta)
 
     def __str__(self):
-        return self.nombre + self.apellidos
+        return self.nombre + " " + self.apellidos
 
 
 @python_2_unicode_compatible
