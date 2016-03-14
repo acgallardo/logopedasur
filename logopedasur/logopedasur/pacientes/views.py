@@ -136,9 +136,9 @@ def pacientes_informe_add(request, pacientesitem_pk):
     if request.method == 'POST':
         data = request.POST
         initial = {}
-        form = nuevoInformeForm(data=data, initial=initial)
-        if form.is_valid():
-            form.save()
+        formNuevoInforme = NuevoInformeForm(data=data, initial=initial)
+        if formNuevoInforme.is_valid():
+            formNuevoInforme.save()
         paciente = Paciente.objects.get(pk=pacientesitem_pk)
         sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
         informes_paciente = Informe.objects.filter(paciente__pk=pacientesitem_pk)
