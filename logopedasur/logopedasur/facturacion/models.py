@@ -55,22 +55,19 @@ class Factura(models.Model):
         '''
             obtain amount of money in taxes (iva)
         '''
-        return self.neto * (self.tipo_iva / 100)
-
+        return format(Decimal(self.neto * (self.tipo_iva / 100)),'.2f')
     cantidad_iva = property(__get_cantidad_iva)
 
     def __get_bruto(self):
         '''
            subtotal = neto + cantidad_iva
         '''
-        return floatformat(Decimal(self.neto) + self.__get_cantidad_iva(),2)
-
+        return format(self.neto + Decimal(self.cantidad_iva),'.2f')
     bruto = property(__get_bruto)
 
     def __get_total(self):
-        cantidad_descuento = float(self.__get_bruto()) * float(self.descuento/100)
-        return floatformat(self.__get_bruto() - cantidad_descuento,2)
-
+        cantidad_descuento = Decimal(self.bruto) * (self.descuento/100)
+        return format(Decimal(self.bruto) - cantidad_descuento,'.2f')
     total = property(__get_total)
 
     def __str__(self):
