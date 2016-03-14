@@ -186,6 +186,7 @@
                                                         </div>
                                                       </div>
                                                     <br />
+
                                                 </div>
                                                 <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
                                                   <!-- start user projects -->
@@ -212,6 +213,30 @@
                                                       </tbody>
                                                   </table>
                                                   <!-- end user projects -->
+                                                  <div class="clearfix"></div>
+                                                  <a class="btn btn-success right" data-toggle="modal" data-target="#myModalInforme"><i class="fa fa-calendar m-right-xs"></i> {% trans "Nuevo informe" %}</a>
+                                                  <!-- Modal -->
+                                                    <div class="modal fade" id="myModalInforme" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                      <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">{% trans "Nuevo inform" %}</h4>
+                                                          </div>
+                                                          <form action="/pacientes/details/{{ paciente.pk }}/informe/add/" method="post" class="form">
+                                                            <div class="modal-body">
+                                                                {% csrf_token %}
+                                                                {% bootstrap_form formNuevoInforme %}
+                                                           </div>
+                                                            <div class="modal-footer">
+                                                              <button type="submit" class="btn btn-success">{% trans "Insertar informe" %}</button>
+                                                              <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Cerrar" %}</button>
+                                                            </div>
+                                                          </form>
+
+                                                        </div>
+                                                      </div>
+                                                    </div>
                                                 </div>
 
                                                 <div role="tabpanel" class="tab-pane fade {% if tab_active == "sesiones" %}

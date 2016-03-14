@@ -128,3 +128,30 @@ def pacientes_sesion_add(request, pacientesitem_pk):
                                    'formNuevaSesion': formNuevaSesion,
                                    'tab_active': "sesiones"},
                                    context_instance=RequestContext(request))
+
+
+@login_required(login_url="/admin/")
+def pacientes_informe_add(request, pacientesitem_pk):
+    data = None #por si no hubiera un POST
+    if request.method == 'POST':
+        data = request.POST
+        initial = {}
+        form = nuevoInformeForm(data=data, initial=initial)
+        if form.is_valid():
+            form.save()
+        paciente = Paciente.objects.get(pk=pacientesitem_pk)
+        sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
+        informes_paciente = Informe.objects.filter(paciente__pk=pacientesitem_pk)
+        data = None
+        initial = {'paciente': Paciente.objects.get(pk=pacientesitem_pk)}
+        formNuevaSesion = nuevaSesionForm(data=data, initial=initial)
+        formNuevaSesion.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
+        formNuevoInforme.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
+        return render_to_response("pacientes/pacientes_details.html",
+                                  {'paciente': paciente,
+                                   'sesiones_paciente': sesiones_paciente,
+                                   'informes_paciente': informes_paciente,
+                                   'formNuevaSesion': formNuevaSesion,
+                                   'formNuevoInforme': formNuevoInforme,
+                                   'tab_active': "informes"},
+                                   context_instance=RequestContext(request))
