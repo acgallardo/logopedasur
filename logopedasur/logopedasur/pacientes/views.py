@@ -88,7 +88,7 @@ def pacientes_add(request):
     if request.method == 'POST':
         data = request.POST
     initial = {}
-    form = PacientesForm(data=data, initial=initial)
+    form = PacientesForm(request.POST, request.FILES)
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('pacientes_list'))
@@ -136,7 +136,7 @@ def pacientes_informe_add(request, pacientesitem_pk):
     if request.method == 'POST':
         data = request.POST
         initial = {}
-        formNuevoInforme = NuevoInformeForm(data=data, initial=initial)
+        formNuevoInforme = NuevoInformeForm(request.POST, request.FILES)
         if formNuevoInforme.is_valid():
             formNuevoInforme.save()
         paciente = Paciente.objects.get(pk=pacientesitem_pk)
