@@ -88,7 +88,7 @@ def pacientes_add(request):
     if request.method == 'POST':
         data = request.POST
     initial = {}
-    form = PacientesForm(request.POST, request.FILES)
+    form = PacientesForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('pacientes_list'))
@@ -120,12 +120,15 @@ def pacientes_sesion_add(request, pacientesitem_pk):
         sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
         data = None
         initial = {'paciente': Paciente.objects.get(pk=pacientesitem_pk)}
+        formNuevoInforme = NuevoInformeForm(data=data, initial=initial)
+        formNuevoInforme.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
         formNuevaSesion = nuevaSesionForm(data=data, initial=initial)
         formNuevaSesion.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
         return render_to_response("pacientes/pacientes_details.html",
                                   {'paciente': paciente,
                                    'sesiones_paciente': sesiones_paciente,
                                    'formNuevaSesion': formNuevaSesion,
+                                   'formNuevoInforme': formNuevoInforme,
                                    'tab_active': "sesiones"},
                                    context_instance=RequestContext(request))
 
