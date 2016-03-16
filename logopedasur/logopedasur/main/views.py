@@ -11,7 +11,7 @@ from django.shortcuts import render, render_to_response
 @login_required(login_url="/login/")
 def index(request):
     return render_to_response("main/index.html",
-            {"nombre": "trukise"},
+            {"username": request.user },
             context_instance=RequestContext(request))
 
 
