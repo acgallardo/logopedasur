@@ -35,7 +35,7 @@ class Terapeuta(models.Model):
     fecha_nacimiento = models.DateField(_('Fecha de nacimiento'))
     num_aseguradora = models.CharField(_('num_aseguradora'), max_length=20, null=True)
     fecha_alta = models.DateField(_('Fecha de ingreso'))
-    imagen = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    imagen = models.ImageField(blank=True, null=True)
     telefono = models.CharField(_('telefono'), max_length=12, null=True)
     especialidad = models.ManyToManyField(Especialidad)
 
