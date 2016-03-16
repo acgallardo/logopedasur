@@ -32,7 +32,9 @@
           <form action="." method="post" class="form" enctype="multipart/form-data">
               {% csrf_token %}
               {% bootstrap_form form %}
-              <button type="submit" class="btn btn-success">{% trans "Insertar nuevo paciente" %}</button>
+              <button type="submit" class="btn btn-success">{% if action == "editar" %}{% trans "Editar paciente" %}
+                                                            {% else %} {% trans "Insertar nuevo paciente" %}
+                                                            {% endif %}</button>
           <form>
         </div>
       </div>

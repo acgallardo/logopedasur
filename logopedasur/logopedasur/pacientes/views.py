@@ -92,7 +92,7 @@ def pacientes_add(request):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('pacientes_list'))
-    return render_to_response("pacientes/pacientes_add.html",{"nombre": "trukise", "form": form},context_instance=RequestContext(request))
+    return render_to_response("pacientes/pacientes_add.html",{"nombre": "trukise", "form": form, "action":"insertar"},context_instance=RequestContext(request))
 
 
 @login_required(login_url='/admin/')
@@ -105,7 +105,7 @@ def pacientes_edit(request, pacientesitem_pk):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('pacientes_list'))
-    return render_to_response("pacientes/pacientes_add.html",{'form': form},context_instance=RequestContext(request))
+    return render_to_response("pacientes/pacientes_add.html",{'form': form, "action":"editar"},context_instance=RequestContext(request))
 
 @login_required(login_url="/admin/")
 def pacientes_sesion_add(request, pacientesitem_pk):

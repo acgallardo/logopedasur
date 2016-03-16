@@ -31,7 +31,7 @@ class Paciente(models.Model):
                                          default=date.today())
     email = models.EmailField(_('email'), max_length=254, null=True, blank=True)
     telefono = models.CharField(_('telefono'), max_length=12, null=True)
-    imagen = models.ImageField(blank=True, null=True)
+    imagen = models.ImageField(null=True, blank=True)
     estado = models.CharField(_(u'estado'), max_length=15,
                            choices = ESTADO_CHOICES, default='En tratamiento',
                            null=False)
