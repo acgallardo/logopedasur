@@ -17,7 +17,7 @@ from logopedasur.sesiones.forms import SesionesForm, nuevaSesionForm
 def tutores_list(request):
     tutores = Tutor.objects.filter().order_by('apellidos')
     return render_to_response("pacientes/tutores_list.html",
-                              {'tutores': tutores},
+                              {"username": request.user, 'tutores': tutores},
                               context_instance=RequestContext(request))
 
 
@@ -31,14 +31,15 @@ def tutor_add(request):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('pacientes_list'))
-    return render_to_response("pacientes/tutor_add.html",{"form": form},context_instance=RequestContext(request))
+    return render_to_response("pacientes/tutor_add.html",{"username": request.user, "form": form},context_instance=RequestContext(request))
 
 @login_required(login_url="/login/")
 def tutores_details(request, tutoresitem_pk):
     tutor = Tutor.objects.get(pk=tutoresitem_pk)
     pacientes = Paciente.objects.filter(tutor__pk=tutoresitem_pk)
     return render_to_response("pacientes/tutores_details.html",
-                               {'tutor': tutor,
+                               {"username": request.user,
+                                'tutor': tutor,
                                 'pacientes': pacientes},
                                context_instance=RequestContext(request))
 
@@ -65,7 +66,8 @@ def pacientes_details(request, pacientesitem_pk):
     formNuevoInforme = NuevoInformeForm(data=data_informe, initial=initial_informe)
     formNuevoInforme.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
     return render_to_response("pacientes/pacientes_details.html",
-                              {'paciente': paciente,
+                              {"username": request.user,
+                               'paciente': paciente,
                                'sesiones_paciente': sesiones_paciente,
                                'informes_paciente': informes_paciente,
                                'facturas_paciente': facturas_paciente,
@@ -78,7 +80,8 @@ def pacientes_details(request, pacientesitem_pk):
 def pacientes_list(request):
     pacientes = Paciente.objects.filter().order_by('apellidos')
     return render_to_response("pacientes/pacientes_list.html",
-                              {'nombre': 'trukise', 'pacientes': pacientes},
+                              {"username": request.user,
+                               'pacientes': pacientes},
                               context_instance=RequestContext(request))
 
 
@@ -92,7 +95,7 @@ def pacientes_add(request):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('pacientes_list'))
-    return render_to_response("pacientes/pacientes_add.html",{"nombre": "trukise", "form": form, "action":"insertar"},context_instance=RequestContext(request))
+    return render_to_response("pacientes/pacientes_add.html",{"username": request.user, "form": form, "action":"insertar"},context_instance=RequestContext(request))
 
 
 @login_required(login_url='/admin/')
@@ -105,7 +108,7 @@ def pacientes_edit(request, pacientesitem_pk):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('pacientes_list'))
-    return render_to_response("pacientes/pacientes_add.html",{'form': form, "action":"editar"},context_instance=RequestContext(request))
+    return render_to_response("pacientes/pacientes_add.html",{"username": request.user,'form': form, "action":"editar"},context_instance=RequestContext(request))
 
 @login_required(login_url="/admin/")
 def pacientes_sesion_add(request, pacientesitem_pk):
@@ -125,7 +128,8 @@ def pacientes_sesion_add(request, pacientesitem_pk):
         formNuevaSesion = nuevaSesionForm(data=data, initial=initial)
         formNuevaSesion.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
         return render_to_response("pacientes/pacientes_details.html",
-                                  {'paciente': paciente,
+                                  {"username": request.user,
+                                   'paciente': paciente,
                                    'sesiones_paciente': sesiones_paciente,
                                    'formNuevaSesion': formNuevaSesion,
                                    'formNuevoInforme': formNuevoInforme,
@@ -151,7 +155,8 @@ def pacientes_informe_add(request, pacientesitem_pk):
         formNuevaSesion.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
         formNuevoInforme.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
         return render_to_response("pacientes/pacientes_details.html",
-                                  {'paciente': paciente,
+                                  {"username": request.user,
+                                   'paciente': paciente,
                                    'sesiones_paciente': sesiones_paciente,
                                    'informes_paciente': informes_paciente,
                                    'formNuevaSesion': formNuevaSesion,
