@@ -1,11 +1,13 @@
 from datetime import datetime
 
 from django.conf import settings
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
+
 
 from logopedasur.pacientes.models import Paciente, Tutor, Informe
 from logopedasur.sesiones.models import Sesion
@@ -79,6 +81,17 @@ def pacientes_details(request, pacientesitem_pk):
 @login_required(login_url="/login")
 def pacientes_list(request):
     pacientes = Paciente.objects.filter().order_by('apellidos')
+    paginator = Paginator(pacientes, settings.PAGINATION_PAGES)
+    page = request.GET.get('page')
+    try:
+        pacientes = paginator.page(page)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver first page
+        pacientes = paginator.page(1)
+    except EmptyPage:
+        #if page is out of range , deliver last page of results
+        pacientes = paginator.page(paginator.num_pages)
+
     return render_to_response("pacientes/pacientes_list.html",
                               {"username": request.user,
                                'pacientes': pacientes},

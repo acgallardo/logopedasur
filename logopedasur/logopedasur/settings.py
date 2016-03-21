@@ -133,3 +133,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'logopedasur','static')]
 
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),'media')
+
+# Var to pagination, elements per page
+PAGINATION_PAGES = 6
