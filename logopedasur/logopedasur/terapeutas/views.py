@@ -1,6 +1,8 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
@@ -22,6 +24,16 @@ def terapeutas_details(request, terapeutasitem_pk):
 @login_required(login_url='/login/')
 def terapeutas_list(request):
     terapeutas = Terapeuta.objects.filter().order_by('apellidos')
+    paginator = Paginator(terapeutas, settings.TERAPEUTAS_PAGINATION_PAGES)
+    page = request.GET.get('page')
+    try:
+        terapeutas = paginator.page(page)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver first page
+        terapeutas = paginator.page(1)
+    except EmptyPage:
+        #if page is out of range , deliver last page of results
+        terapeutas = paginator.page(paginator.num_pages)
     return render_to_response("terapeutas/terapeutas_list.html",
                               {"terapeutas": terapeutas},
                               context_instance=RequestContext(request))

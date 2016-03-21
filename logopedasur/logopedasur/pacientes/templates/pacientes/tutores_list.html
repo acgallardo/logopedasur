@@ -87,9 +87,31 @@
                           </div>
                       </div>
                       {% endfor %}
-
                   </div>
+                  <div class="row" style="text-align:center;">
+                    <ul class="pagination pagination-sm">
+                    {% if tutores.has_previous %}
+                        <li><a href="?page={{ tutores.previous_page_number}}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled">
+                          <span>&laquo;</span>
+                        <li>
+                    {% endif %}
 
+                    {% for i in tutores.paginator.page_range  %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+
+                    {% if tutores.has_next %}
+                       <li><a href="?page={{ tutores.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                       <li class="disabled">
+                           <span>&raquo;</span>
+                       </li>
+                    {% endif %}
+
+                    </ul>
+                  </div>
               </div>
           </div>
       </div>

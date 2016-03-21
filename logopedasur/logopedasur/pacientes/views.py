@@ -18,6 +18,16 @@ from logopedasur.sesiones.forms import SesionesForm, nuevaSesionForm
 @login_required(login_url="/login/")
 def tutores_list(request):
     tutores = Tutor.objects.filter().order_by('apellidos')
+    paginator = Paginator(tutores, settings.TUTORES_PAGINATION_PAGES)
+    page = request.GET.get('page')
+    try:
+        tutores = paginator.page(page)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver first page
+        tutores = paginator.page(1)
+    except EmptyPage:
+        #if page is out of range , deliver last page of results
+        tutores = paginator.page(paginator.num_pages)
     return render_to_response("pacientes/tutores_list.html",
                               {"username": request.user, 'tutores': tutores},
                               context_instance=RequestContext(request))
@@ -81,7 +91,7 @@ def pacientes_details(request, pacientesitem_pk):
 @login_required(login_url="/login")
 def pacientes_list(request):
     pacientes = Paciente.objects.filter().order_by('apellidos')
-    paginator = Paginator(pacientes, settings.PAGINATION_PAGES)
+    paginator = Paginator(pacientes, settings.PACIENTES_PAGINATION_PAGES)
     page = request.GET.get('page')
     try:
         pacientes = paginator.page(page)
