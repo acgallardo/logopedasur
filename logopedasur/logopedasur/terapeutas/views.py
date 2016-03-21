@@ -23,7 +23,19 @@ def terapeutas_details(request, terapeutasitem_pk):
 
 @login_required(login_url='/login/')
 def terapeutas_list(request):
-    terapeutas = Terapeuta.objects.filter().order_by('apellidos')
+
+    letras = map(chr, range(65, 91))
+    encontradas = []
+
+    for l in letras:
+        terapeutas = Terapeuta.objects.filter(nombre__startswith=l)
+        if terapeutas:
+            encontradas.append(l)
+    if request.GET.get('initial'):
+        terapeutas = Terapeuta.objects.filter(nombre__startswith=request.GET.get('initial')).order_by('apellidos')
+    else:
+        terapeutas = Terapeuta.objects.filter().order_by('apellidos')
+
     paginator = Paginator(terapeutas, settings.TERAPEUTAS_PAGINATION_PAGES)
     page = request.GET.get('page')
     try:
@@ -35,7 +47,8 @@ def terapeutas_list(request):
         #if page is out of range , deliver last page of results
         terapeutas = paginator.page(paginator.num_pages)
     return render_to_response("terapeutas/terapeutas_list.html",
-                              {"terapeutas": terapeutas},
+                              {"terapeutas": terapeutas,
+                               "encontradas": encontradas},
                               context_instance=RequestContext(request))
 
 

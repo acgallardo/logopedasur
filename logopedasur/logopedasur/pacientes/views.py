@@ -17,7 +17,18 @@ from logopedasur.sesiones.forms import SesionesForm, nuevaSesionForm
 
 @login_required(login_url="/login/")
 def tutores_list(request):
-    tutores = Tutor.objects.filter().order_by('apellidos')
+    letras = map(chr, range(65, 91))
+    encontradas = []
+
+    for l in letras:
+        tutores = Tutor.objects.filter(nombre__startswith=l)
+        if tutores:
+            encontradas.append(l)
+    if request.GET.get('initial'):
+        tutores = Tutor.objects.filter(nombre__startswith=request.GET.get('initial'))
+    else:
+        tutores = Tutor.objects.filter().order_by('apellidos')
+
     paginator = Paginator(tutores, settings.TUTORES_PAGINATION_PAGES)
     page = request.GET.get('page')
     try:
@@ -29,7 +40,8 @@ def tutores_list(request):
         #if page is out of range , deliver last page of results
         tutores = paginator.page(paginator.num_pages)
     return render_to_response("pacientes/tutores_list.html",
-                              {"username": request.user, 'tutores': tutores},
+                              {"username": request.user, 'tutores': tutores,
+                               "encontradas": encontradas},
                               context_instance=RequestContext(request))
 
 
@@ -134,7 +146,19 @@ def pacientes_details(request, pacientesitem_pk):
 
 @login_required(login_url="/login")
 def pacientes_list(request):
-    pacientes = Paciente.objects.filter().order_by('apellidos')
+
+    letras = map(chr, range(65, 91))
+    encontradas = []
+
+    for l in letras:
+        pacientes = Paciente.objects.filter(nombre__startswith=l)
+        if pacientes:
+            encontradas.append(l)
+
+    if request.GET.get('initial'):
+        pacientes = Paciente.objects.filter(nombre__startswith=request.GET.get('initial'))
+    else:
+        pacientes = Paciente.objects.filter().order_by('apellidos')
     paginator = Paginator(pacientes, settings.PACIENTES_PAGINATION_PAGES)
     page = request.GET.get('page')
     try:
@@ -148,7 +172,8 @@ def pacientes_list(request):
 
     return render_to_response("pacientes/pacientes_list.html",
                               {"username": request.user,
-                               'pacientes': pacientes},
+                               'pacientes': pacientes,
+                               'encontradas': encontradas},
                               context_instance=RequestContext(request))
 
 
