@@ -241,6 +241,30 @@
                                                   </table>
                                                   <!-- end user projects -->
                                                   <div class="clearfix"></div>
+                                                  <div class="row" style="text-align:center;">
+                                                    <ul class="pagination pagination-sm">
+                                                    {% if informes_paciente.has_previous %}
+                                                        <li><a href="?tab=informes&page={{ informes_paciente.previous_page_number}}">&laquo;</a></li>
+                                                    {% else %}
+                                                        <li class="disabled">
+                                                          <span>&laquo;</span>
+                                                        <li>
+                                                    {% endif %}
+
+                                                    {% for i in informes_paciente.paginator.page_range  %}
+                                                        <li><a href="?tab=informes&page={{ i }}">{{ i }}</a></li>
+                                                    {% endfor %}
+
+                                                    {% if informes_paciente.has_next %}
+                                                       <li><a href="?tab=informes&page={{ informes_paciente.next_page_number }}">&raquo;</a></li>
+                                                    {% else %}
+                                                       <li class="disabled">
+                                                           <span>&raquo;</span>
+                                                       </li>
+                                                    {% endif %}
+
+                                                    </ul>
+                                                  </div>
                                                   <a class="btn btn-success right" data-toggle="modal" data-target="#myModalInforme"><i class="fa fa-calendar m-right-xs"></i> {% trans "Nuevo informe" %}</a>
                                                   <!-- Modal -->
                                                     <div class="modal fade" id="myModalInforme" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -294,6 +318,31 @@
                                                         {% endfor %}
                                                       </tbody>
                                                   </table>
+                                                  <div class="clearfix"></div>
+                                                  <div class="row" style="text-align:center;">
+                                                    <ul class="pagination pagination-sm">
+                                                    {% if facturas_paciente.has_previous %}
+                                                        <li><a href="?tab=facturas&page={{ facturas_paciente.previous_page_number}}">&laquo;</a></li>
+                                                    {% else %}
+                                                        <li class="disabled">
+                                                          <span>&laquo;</span>
+                                                        <li>
+                                                    {% endif %}
+
+                                                    {% for i in facturas_paciente.paginator.page_range  %}
+                                                        <li><a href="?tab=facturas&page={{ i }}">{{ i }}</a></li>
+                                                    {% endfor %}
+
+                                                    {% if facturas_paciente.has_next %}
+                                                       <li><a href="?tab=facturas&page={{ facturas_paciente.next_page_number }}">&raquo;</a></li>
+                                                    {% else %}
+                                                       <li class="disabled">
+                                                           <span>&raquo;</span>
+                                                       </li>
+                                                    {% endif %}
+
+                                                    </ul>
+                                                  </div>
                                                   <!-- end user projects -->
                                                 </div>
                                             </div>
