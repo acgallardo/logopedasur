@@ -59,9 +59,43 @@ def tutores_details(request, tutoresitem_pk):
 @login_required(login_url="/login/")
 def pacientes_details(request, pacientesitem_pk):
     paciente = Paciente.objects.get(pk=pacientesitem_pk)
+
     sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
+    paginator_sesiones = Paginator(sesiones_paciente, settings.SESIONES_PAGINATION_PAGES)
+    page = request.GET.get('page')
+    try:
+        sesiones_paciente = paginator_sesiones.page(page)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver first page
+        sesiones_paciente = paginator_sesiones.page(1)
+    except EmptyPage:
+        #if page is out of range , deliver last page of results
+        sesiones_paciente = paginator_sesiones.page(paginator.num_pages)
+
     informes_paciente = Informe.objects.filter(paciente__pk=pacientesitem_pk)
+    paginator_informes = Paginator(informes_paciente, settings.INFORMES_PAGINATION_PAGES)
+    page = request.GET.get('page')
+    try:
+        informes_paciente = paginator_informes.page(page)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver first page
+        informes_paciente = paginator_informes.page(1)
+    except EmptyPage:
+        #if page is out of range , deliver last page of results
+        informes_paciente = paginator_informes.page(paginator_informes.num_pages)
+
     facturas_paciente = Factura.objects.filter(paciente__pk=pacientesitem_pk)
+    paginator_facturas = Paginator(facturas_paciente, settings.FACTURAS_PAGINATION_PAGES)
+    page = request.GET.get('page')
+    try:
+        facturas_paciente = paginator_facturas.page(page)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver first page
+        facturas_paciente = paginator_facturas.page(1)
+    except EmptyPage:
+        #if page is out of range , deliver last page of results
+        facturas_paciente = paginator_facturas.page(paginator_facturas.num_pages)
+
     # Create nnuevaSesionForm and only show the patient relationed
     # on manytomany form field, using initial values, a populate "paciente"
     # fields with specified values with a queryset
@@ -77,6 +111,16 @@ def pacientes_details(request, pacientesitem_pk):
     initial_informe = {'paciente': Paciente.objects.get(pk=pacientesitem_pk)}
     formNuevoInforme = NuevoInformeForm(data=data_informe, initial=initial_informe)
     formNuevoInforme.fields['paciente'].queryset = Paciente.objects.filter(pk=pacientesitem_pk)
+
+    if request.GET.get('tab') == 'sesiones':
+        tab_active = "sesiones"
+    elif request.GET.get('tab') == 'facturas':
+        tab_active = "facturas"
+    elif request.GET.get('tab') == 'informes':
+        tab_active = "informes"
+    else:
+        tab_active = "observaciones"
+
     return render_to_response("pacientes/pacientes_details.html",
                               {"username": request.user,
                                'paciente': paciente,
@@ -85,7 +129,7 @@ def pacientes_details(request, pacientesitem_pk):
                                'facturas_paciente': facturas_paciente,
                                'formNuevaSesion': formNuevaSesion,
                                'formNuevoInforme': formNuevoInforme,
-                               'tab_active': 'observaciones'},
+                               'tab_active': tab_active},
                                context_instance=RequestContext(request))
 
 @login_required(login_url="/login")

@@ -155,13 +155,36 @@
                                                                     {% else %}
                                                                           <span class="label label-success">{% trans "No pagada"  %}</span>
                                                                     {% endif %}</td>
-
                                                             </tr>
                                                           {% endfor %}
                                                         </tbody>
                                                     </table>
                                                     <!-- end user projects -->
                                                     <div class="clearfix"></div>
+                                                    <div class="row" style="text-align:center;">
+                                                      <ul class="pagination pagination-sm">
+                                                      {% if sesiones_paciente.has_previous %}
+                                                          <li><a href="?tab=sesiones&page={{ sesiones_paciente.previous_page_number}}">&laquo;</a></li>
+                                                      {% else %}
+                                                          <li class="disabled">
+                                                            <span>&laquo;</span>
+                                                          <li>
+                                                      {% endif %}
+
+                                                      {% for i in sesiones_paciente.paginator.page_range  %}
+                                                          <li><a href="?tab=sesiones&page={{ i }}">{{ i }}</a></li>
+                                                      {% endfor %}
+
+                                                      {% if sesiones_paciente.has_next %}
+                                                         <li><a href="?tab=sesiones&page={{ sesiones_paciente.next_page_number }}">&raquo;</a></li>
+                                                      {% else %}
+                                                         <li class="disabled">
+                                                             <span>&raquo;</span>
+                                                         </li>
+                                                      {% endif %}
+
+                                                      </ul>
+                                                    </div>
                                                     <a class="btn btn-success right" data-toggle="modal" data-target="#myModal"><i class="fa fa-calendar m-right-xs"></i> {% trans "Nueva sesión" %}</a>
                                                     <!-- Modal -->
                                                       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
