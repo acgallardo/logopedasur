@@ -164,7 +164,7 @@
                                                     <div class="row" style="text-align:center;">
                                                       <ul class="pagination pagination-sm">
                                                       {% if sesiones_paciente.has_previous %}
-                                                          <li><a href="?tab=sesiones&page={{ sesiones_paciente.previous_page_number}}">&laquo;</a></li>
+                                                          <li><a href="/pacientes/details/{{ paciente.pk }}/?tab=sesiones&page={{ sesiones_paciente.previous_page_number}}">&laquo;</a></li>
                                                       {% else %}
                                                           <li class="disabled">
                                                             <span>&laquo;</span>
@@ -172,11 +172,11 @@
                                                       {% endif %}
 
                                                       {% for i in sesiones_paciente.paginator.page_range  %}
-                                                          <li><a href="?tab=sesiones&page={{ i }}">{{ i }}</a></li>
+                                                          <li><a href="/pacientes/details/{{ paciente.pk }}/?tab=sesiones&page={{ i }}">{{ i }}</a></li>
                                                       {% endfor %}
 
                                                       {% if sesiones_paciente.has_next %}
-                                                         <li><a href="?tab=sesiones&page={{ sesiones_paciente.next_page_number }}">&raquo;</a></li>
+                                                         <li><a href="/pacientes/details/{{ paciente.pk }}/?tab=sesiones&page={{ sesiones_paciente.next_page_number }}">&raquo;</a></li>
                                                       {% else %}
                                                          <li class="disabled">
                                                              <span>&raquo;</span>
@@ -244,7 +244,7 @@
                                                   <div class="row" style="text-align:center;">
                                                     <ul class="pagination pagination-sm">
                                                     {% if informes_paciente.has_previous %}
-                                                        <li><a href="?tab=informes&page={{ informes_paciente.previous_page_number}}">&laquo;</a></li>
+                                                        <li><a href="/pacientes/details/{{ paciente.pk }}/?tab=informes&page={{ informes_paciente.previous_page_number}}">&laquo;</a></li>
                                                     {% else %}
                                                         <li class="disabled">
                                                           <span>&laquo;</span>
@@ -252,11 +252,11 @@
                                                     {% endif %}
 
                                                     {% for i in informes_paciente.paginator.page_range  %}
-                                                        <li><a href="?tab=informes&page={{ i }}">{{ i }}</a></li>
+                                                        <li><a href="/pacientes/details/{{ paciente.pk }}/?tab=informes&page={{ i }}">{{ i }}</a></li>
                                                     {% endfor %}
 
                                                     {% if informes_paciente.has_next %}
-                                                       <li><a href="?tab=informes&page={{ informes_paciente.next_page_number }}">&raquo;</a></li>
+                                                       <li><a href="/pacientes/details/{{ paciente.pk }}/?tab=informes&page={{ informes_paciente.next_page_number }}">&raquo;</a></li>
                                                     {% else %}
                                                        <li class="disabled">
                                                            <span>&raquo;</span>
@@ -322,7 +322,7 @@
                                                   <div class="row" style="text-align:center;">
                                                     <ul class="pagination pagination-sm">
                                                     {% if facturas_paciente.has_previous %}
-                                                        <li><a href="?tab=facturas&page={{ facturas_paciente.previous_page_number}}">&laquo;</a></li>
+                                                        <li><a href="/pacientes/details/{{ paciente.pk }}/?tab=facturas&page={{ facturas_paciente.previous_page_number}}">&laquo;</a></li>
                                                     {% else %}
                                                         <li class="disabled">
                                                           <span>&laquo;</span>
@@ -330,11 +330,11 @@
                                                     {% endif %}
 
                                                     {% for i in facturas_paciente.paginator.page_range  %}
-                                                        <li><a href="?tab=facturas&page={{ i }}">{{ i }}</a></li>
+                                                        <li><a href="/pacientes/details/{{ paciente.pk }}/?tab=facturas&page={{ i }}">{{ i }}</a></li>
                                                     {% endfor %}
 
                                                     {% if facturas_paciente.has_next %}
-                                                       <li><a href="?tab=facturas&page={{ facturas_paciente.next_page_number }}">&raquo;</a></li>
+                                                       <li><a href="/pacientes/details/{{ paciente.pk }}/?tab=facturas&page={{ facturas_paciente.next_page_number }}">&raquo;</a></li>
                                                     {% else %}
                                                        <li class="disabled">
                                                            <span>&raquo;</span>

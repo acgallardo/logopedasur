@@ -82,7 +82,7 @@ def pacientes_details(request, pacientesitem_pk):
         sesiones_paciente = paginator_sesiones.page(1)
     except EmptyPage:
         #if page is out of range , deliver last page of results
-        sesiones_paciente = paginator_sesiones.page(paginator.num_pages)
+        sesiones_paciente = paginator_sesiones.page(paginator_sesiones.num_pages)
 
     informes_paciente = Informe.objects.filter(paciente__pk=pacientesitem_pk)
     paginator_informes = Paginator(informes_paciente, settings.INFORMES_PAGINATION_PAGES)
@@ -238,9 +238,46 @@ def pacientes_informe_add(request, pacientesitem_pk):
         formNuevoInforme = NuevoInformeForm(request.POST, request.FILES)
         if formNuevoInforme.is_valid():
             formNuevoInforme.save()
+
+
         paciente = Paciente.objects.get(pk=pacientesitem_pk)
+
         sesiones_paciente = Sesion.objects.filter(paciente__pk=pacientesitem_pk)
+        paginator_sesiones = Paginator(sesiones_paciente, settings.SESIONES_PAGINATION_PAGES)
+        page = request.GET.get('page')
+        try:
+            sesiones_paciente = paginator_sesiones.page(page)
+        except PageNotAnInteger:
+            # if page is not an integer, deliver first page
+            sesiones_paciente = paginator_sesiones.page(1)
+        except EmptyPage:
+            #if page is out of range , deliver last page of results
+            sesiones_paciente = paginator_sesiones.page(paginator_sesiones.num_pages)
+
         informes_paciente = Informe.objects.filter(paciente__pk=pacientesitem_pk)
+        paginator_informes = Paginator(informes_paciente, settings.INFORMES_PAGINATION_PAGES)
+        page = request.GET.get('page')
+        try:
+            informes_paciente = paginator_informes.page(page)
+        except PageNotAnInteger:
+            # if page is not an integer, deliver first page
+            informes_paciente = paginator_informes.page(1)
+        except EmptyPage:
+            #if page is out of range , deliver last page of results
+            informes_paciente = paginator_informes.page(paginator_informes.num_pages)
+
+        facturas_paciente = Factura.objects.filter(paciente__pk=pacientesitem_pk)
+        paginator_facturas = Paginator(facturas_paciente, settings.FACTURAS_PAGINATION_PAGES)
+        page = request.GET.get('page')
+        try:
+            facturas_paciente = paginator_facturas.page(page)
+        except PageNotAnInteger:
+            # if page is not an integer, deliver first page
+            facturas_paciente = paginator_facturas.page(1)
+        except EmptyPage:
+            #if page is out of range , deliver last page of results
+            facturas_paciente = paginator_facturas.page(paginator_facturas.num_pages)
+
         data = None
         initial = {'paciente': Paciente.objects.get(pk=pacientesitem_pk)}
         formNuevaSesion = nuevaSesionForm(data=data, initial=initial)
@@ -251,6 +288,7 @@ def pacientes_informe_add(request, pacientesitem_pk):
                                    'paciente': paciente,
                                    'sesiones_paciente': sesiones_paciente,
                                    'informes_paciente': informes_paciente,
+                                   'facturas_paciente': facturas_paciente,
                                    'formNuevaSesion': formNuevaSesion,
                                    'formNuevoInforme': formNuevoInforme,
                                    'tab_active': "informes"},
