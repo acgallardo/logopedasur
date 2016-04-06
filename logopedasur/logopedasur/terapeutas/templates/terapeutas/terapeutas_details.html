@@ -91,11 +91,23 @@
 
                                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                             <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                                <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{% trans "Observaciones" %}</a>
+                                                <li role="presentation" class="{% if tab_active == "observaciones" %}
+                                                                                      active
+                                                                               {% else %}
+                                                                                      ''
+                                                                               {% endif %}"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{% trans "Observaciones" %}</a>
                                                 </li>
-                                                <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">{% trans "Sesiones" %}</a>
+                                                <li role="presentation" class="{% if tab_active == "sesiones" %}
+                                                                                      active
+                                                                               {% else %}
+                                                                                      ''
+                                                                               {% endif %}"><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">{% trans "Sesiones" %}</a>
                                                 </li>
-                                                <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">{% trans "Informes" %}</a>
+                                                <li role="presentation" class="{% if tab_active == "facturacion" %}
+                                                                                      active
+                                                                               {% else %}
+                                                                                      ''
+                                                                               {% endif %}"><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">{% trans "Informes" %}</a>
                                                 </li>
                                                 <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab4" data-toggle="tab" aria-expanded="false">{% trans "Facturación" %}</a>
                                                 </li>
@@ -104,64 +116,48 @@
                                                 <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
                                                   {{ paciente.observaciones }}
                                                 </div>
-                                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                                <div role="tabpanel" class="tab-pane fade  {% if tab_active == "sesiones" %}
+                                                                                            active in
+                                                                                          {% else %}
+                                                                                            ''
+                                                                                          {% endif %}" id="tab_content2" aria-labelledby="profile-tab">
 
                                                     <!-- start user projects -->
                                                     <table class="data table table-striped no-margin">
                                                         <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Project Name</th>
-                                                                <th>Client Company</th>
-                                                                <th class="hidden-phone">Hours Spent</th>
-                                                                <th>Contribution</th>
-                                                            </tr>
+                                                          <tr>
+                                                              <th>Fecha</th>
+                                                              <th>Tipo</th>
+                                                              <th>Hora inicio</th>
+                                                              <th>Hora fin</th>
+                                                              <th>Facturable</th>
+                                                              <th>Pagada</th>
+                                                              <th>Acciones</th>
+                                                          </tr>
                                                         </thead>
                                                         <tbody>
+                                                          {% for sesion_terapeuta in sesiones_terapeutas %}
                                                             <tr>
-                                                                <td>1</td>
-                                                                <td>New Company Takeover Review</td>
-                                                                <td>Deveint Inc</td>
-                                                                <td class="hidden-phone">18</td>
-                                                                <td class="vertical-align-mid">
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-success" data-transitiongoal="35"></div>
-                                                                    </div>
-                                                                </td>
+                                                              <td>{{ sesiones_terapeuta.fecha_sesion }}</td>
+                                                              <td>{{ sesiones_terapeuta.tipo.nombre }}</td>
+                                                              <td>{{ sesion_terapeuta.hora_inicio }}</td>
+                                                              <td>{{ sesion_terapeuta.hora_fin }}</td>
+                                                              <td>{% if sesion_terapeuta.tipo.facturable %} <b>Si</b>
+                                                                  {% else %} <b style="color:red">No</b>
+                                                                  {% endif %}</td>
+                                                              <td>{% if sesion_terapeuta.pagada %}
+                                                                        <span class="label label-success">{% trans "Pagada"  %}</span>
+                                                                  {% elif sesion_terapeuta.facturable %}
+                                                                        <span class="label label-danger">{% trans "No pagada"  %}</span>
+                                                                  {% else %}
+                                                                        <span class="label label-success">{% trans "No pagada"  %}</span>
+                                                                  {% endif %}</td>
+                                                              <td>
+                                                                <a href="#" class="btn btn-info btn-xs"><i class="fa fa-eye"></i></a>
+                                                                <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                                              </td>
                                                             </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>New Partner Contracts Consultanci</td>
-                                                                <td>Deveint Inc</td>
-                                                                <td class="hidden-phone">13</td>
-                                                                <td class="vertical-align-mid">
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-danger" data-transitiongoal="15"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>Partners and Inverstors report</td>
-                                                                <td>Deveint Inc</td>
-                                                                <td class="hidden-phone">30</td>
-                                                                <td class="vertical-align-mid">
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-success" data-transitiongoal="45"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>4</td>
-                                                                <td>New Company Takeover Review</td>
-                                                                <td>Deveint Inc</td>
-                                                                <td class="hidden-phone">28</td>
-                                                                <td class="vertical-align-mid">
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-success" data-transitiongoal="75"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                          {% endfor %}
                                                         </tbody>
                                                     </table>
                                                     <!-- end user projects -->
