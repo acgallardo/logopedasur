@@ -136,6 +136,7 @@
                                                                 <th>Hora fin</th>
                                                                 <th>Facturable</th>
                                                                 <th>Pagada</th>
+                                                                <th>Acciones</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -155,6 +156,10 @@
                                                                     {% else %}
                                                                           <span class="label label-success">{% trans "No pagada"  %}</span>
                                                                     {% endif %}</td>
+                                                                <td>
+                                                                  <a href="#" class="btn btn-info btn-xs"><i class="fa fa-eye"></i></a>
+                                                                  <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                                                </td>
                                                             </tr>
                                                           {% endfor %}
                                                         </tbody>
@@ -234,7 +239,10 @@
                                                               <td>{{ informe_paciente.fecha_entrega }}</td>
                                                               <td><span class="label label-success">{{ informe_paciente.tipo }}</span></td>
                                                               <td>{{ informe_paciente.terapeuta }}</td>
-                                                              <td><a href="{{ informe_paciente.informe.url }}" target="blank" class="btn btn-info btn-xs"><i class="fa fa-eye"> Ver </i></a></td>
+                                                              <td>
+                                                                <a href="{{ informe_paciente.informe.url }}" target="blank" class="btn btn-info btn-xs"><i class="fa fa-eye"></i></a>
+                                                                <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                                              </td>
                                                           </tr>
                                                         {% endfor %}
                                                       </tbody>
@@ -313,7 +321,10 @@
                                                               <td>{{ factura_paciente.fecha }}</td>
                                                               <td>{{ factura_paciente.titulo }}</td>
                                                               <td>{{ factura_paciente.total}}</td>
-                                                              <td><a href="" target="blank" class="btn btn-info btn-xs"><i class="fa fa-eye"> Ver </i></a></td>
+                                                              <td>
+                                                                <a href="#" class="btn btn-info btn-xs"><i class="fa fa-eye"></i></a>
+                                                                <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                                              </td>
                                                           </tr>
                                                         {% endfor %}
                                                       </tbody>
